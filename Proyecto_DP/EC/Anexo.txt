@@ -1,0 +1,14 @@
+Autor: Carlos Muñoz Zapata (camuozz@alumnos.unex.es)
+
+Propuesta:
+
+	Debido a que es obligatorio el uso de un sistema de control de versiones
+	pero esto esta mas pensado para el trabajo por parejas, propongo el uso 
+	de dicho sistema para controlar las distintas entregas del proyecto como
+	versiones distintas de un mismo trabajo (a pesar de trabajar en solitario).
+
+	Espero la confirmacion de la propuesta y en caso afirmativo espero que 
+	encuentren agradable esta idea para futuros trabajos donde los alumnos
+	puedan trabajar en parejas o en solitario.
+
+	Un saludo ~
