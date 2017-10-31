@@ -1,4 +1,4 @@
-Autor: Carlos Muñoz Zapata (camuozz@alumnos.unex.es)
+Autor: Carlos MuÃ±oz Zapata (camuozz@alumnos.unex.es)
 
 Propuesta:
 
@@ -11,4 +11,4 @@ Propuesta:
 	encuentren agradable esta idea para futuros trabajos donde los alumnos
 	puedan trabajar en parejas o en solitario.
 
-	Un saludo ~~1
+	Un saludo ~~2
