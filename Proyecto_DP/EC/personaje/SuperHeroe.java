@@ -9,7 +9,7 @@ import mapa.MapaS;
 /**
  * Clase que representa el tipo de personaje
  * SuperHeroe
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  *
  */
@@ -41,9 +41,9 @@ public class SuperHeroe extends Personaje {
 
 	@Override
 	public void interactuarSala() {
-		/* Superhéroes. Si no tenía previamente este arma, será almacenada en su contenedor de armas 
-		(que debe permitir búsquedas de la forma más eficiente posible), mientras que si ya la tenía, se le sumará 
-		al poder del arma que tenía el poder del arma que ha recogido. */
+		/* Superhï¿½roes. Si no tenï¿½a previamente este arma, serï¿½ almacenada en su contenedor de armas 
+		(que debe permitir bï¿½squedas de la forma mï¿½s eficiente posible), mientras que si ya la tenï¿½a, se le sumarï¿½ 
+		al poder del arma que tenï¿½a el poder del arma que ha recogido. */
 
 		//obtenemos el arma mas potente de la sala
 		MapaS grand = new MapaS();
@@ -51,9 +51,10 @@ public class SuperHeroe extends Personaje {
 		
 		Arma sacada = grand.getMapa().getMapita()[getDondeEstoy()%H][getDondeEstoy()/H].getArmasDentro().borrarPrimero();
 		
+		
 		//nos la quedamos :3
 		if(ArmasDelPJ.pertenece(sacada)){
-			//si ya tenemos un arma igual, ¡JUNTAMOS SU PODER! pero desenvainamos primero la nuestra ~
+			//si ya tenemos un arma igual, ï¿½JUNTAMOS SU PODER! pero desenvainamos primero la nuestra ~
 			Arma laMia = ArmasDelPJ.obtenerBorrando(sacada);
 			//juntamos su poder y nos la guardamos
 			ArmasDelPJ.insertar(new Arma(laMia.getNombre(),(laMia.getPoder()+sacada.getPoder()))); 
@@ -72,8 +73,12 @@ public class SuperHeroe extends Personaje {
 		Arma miCandidata = obtenerArmaMasPotente(true);
 		//ahora ElHombrePuerta saca su arma del mismo tipo (si la tiene)
 		Arma candidataDeEHP = grand.getMapa().getSalaHombrePuerta().getHp().obtenerBorrando(miCandidata);
+		/*TODO evitar hacer estos CHORIZOS utilizando metodos que no escalen con los get,get,get....
+		vamos, que lo que tienes que hacer es en vez de poner el chorizo, poner un metodo que sea "obtenerArmaDeCobate()" o algo
+		asi para que ese metodo ya haga lo que sea y no tenga que hacerlo el SH ni el VILLANO
+		 recordar -> (CADA UNO HACE SU FUNCION, HACE LO SUYO Y LE PIDE A LOS DEMAS LO QUE LOS DEMAS TENGAN QUE HACER)*/
 		
-		//ahora... ¡SE ALZA LA BATALLA! ¿quien gana? 
+		//ahora... ï¿½SE ALZA LA BATALLA! ï¿½quien gana? 
 		//si el hombre puerta no tiene un arma equiparable... pues nada, no hay batalla :/
 		if(candidataDeEHP != null){ 
 			if(miCandidata.getPoder() > candidataDeEHP.getPoder()){ // si gana el SuperHeroe
@@ -106,7 +111,7 @@ public class SuperHeroe extends Personaje {
 	 * @return el arma mas potente
 	 */
 	public Arma obtenerArmaMasPotente(boolean borrar){
-		Arma ret = new Arma("a puñetazo limpio",-1);
+		Arma ret = new Arma("a puï¿½etazo limpio",-1);
 		//primaro obtenemos las armas que que tenemos disponibles
 		LinkedList<Arma> ll = ArmasDelPJ.inOrden();
 		

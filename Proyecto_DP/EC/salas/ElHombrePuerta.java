@@ -10,7 +10,7 @@ import contenedores.Arbol;
  * Este elemento es quien se pone entre la sala en si
  * y el teseracto (victoria) por lo que puede considerarse una
  * PUERTA. 
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  */
 public class ElHombrePuerta {
@@ -19,7 +19,7 @@ public class ElHombrePuerta {
 	private boolean estado; //true -> abierto
 	private int constanteDeApertura;
 	
-	private Arbol<Arma> SetDeArmasIniciales;
+	private Arbol<Arma> SetDeArmasIniciales;// TODO quitar. no va a hacer falta
 	private Arbol<Arma> ArmasActuales;
 	
 
@@ -139,7 +139,7 @@ public class ElHombrePuerta {
 	 * @return arma mas potente (null si no le quedan)
 	 */
 	public Arma obtenerArmaMasPotente(boolean borrar) {
-		Arma ret = new Arma("a puñetazo limpio",-1);
+		Arma ret = new Arma("a puï¿½etazo limpio",-1);
 		//primero obtenemos las armas que tenemos disponibles
 		LinkedList<Arma> ll = ArmasActuales.inOrden();
 		

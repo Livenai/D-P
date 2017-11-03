@@ -9,7 +9,7 @@ import personaje.Villano;
 /**
  * Clase principal que se encarga de inicializar 
  * el sistema y de gestionar la simulacion.
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  *
  */
@@ -19,6 +19,7 @@ public class MapaS {
 	private static Mapa Tablero; //unico
 	//----------
 	
+	//TODO encapsular el singeltone y hacerlo puro para que no haya posibilidad de crear otro mapa
 
 	/**
 	 * Crea el mapa si este no ha sido creado. Posteriormente lo devuelve.
@@ -70,7 +71,7 @@ public class MapaS {
         SuperHeroe storm = new SuperHeroe("Storm", 'S',35);
         storm.insertarArma(new Arma("CampoMagnetico",20));
 
-        SuperHeroe captainAmerica = new SuperHeroe("Capitan América", 'C',35);
+        SuperHeroe captainAmerica = new SuperHeroe("Capitan Amï¿½rica", 'C',35);
         captainAmerica.insertarArma(new Arma("Escudo",18));
         
         SuperHeroe cadenaDeFuegoSaltarina = new SuperHeroe("Cadena De Fuego Saltarina", 'F',35);
