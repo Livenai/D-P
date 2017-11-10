@@ -19,7 +19,6 @@ public class ElHombrePuerta {
 	private boolean estado; //true -> abierto
 	private int constanteDeApertura;
 	
-	private Arbol<Arma> SetDeArmasIniciales;// TODO quitar. no va a hacer falta
 	private Arbol<Arma> ArmasActuales;
 	
 
@@ -31,7 +30,6 @@ public class ElHombrePuerta {
 		constanteDeApertura = cteApertura;
 		estado = false;
 		
-		 SetDeArmasIniciales = new Arbol<Arma>();
 		 ArmasActuales = new Arbol<Arma>();	
 		
 	    Arma[] setDeArmas = {new Arma("CampoEnergia", 5), new Arma("Armadura",13), new 
@@ -42,14 +40,13 @@ public class ElHombrePuerta {
 	            Arma("Flecha",12), new Arma("Gema",4)};
 	    
 	    for (int j = 0; j < setDeArmas.length; j++) {
-	    	SetDeArmasIniciales.insertar(setDeArmas[j]);
 	    	ArmasActuales.insertar(setDeArmas[j]);
 		}
 	    
 	    
 	    System.out.println("[!] ElHombrePuerta ha sido creado con un set de " + setDeArmas.length + " armas.");
 	    System.out.println("     set de armas ordenadas:");
-	    mostrarSetDeArmasIniciales();
+	    mostrarSetDeArmasActual();
 	}
 	
 
@@ -87,13 +84,7 @@ public class ElHombrePuerta {
 		this.constanteDeApertura = constanteDeApertura;
 	}
 	
-	/**
-	 * muestra por pantalla el set de armas
-	 * iniciales en su orden correspondiente
-	 */
-	public void mostrarSetDeArmasIniciales(){
-		SetDeArmasIniciales.inOrdenMostrar();
-	}
+
 	
 	
 	/**

@@ -20,6 +20,7 @@ public class MapaS {
 	//----------
 	
 	//TODO encapsular el singeltone y hacerlo puro para que no haya posibilidad de crear otro mapa
+	//para esto el constructor tiene que ser privado y fusionar mapa y mapaS
 
 	/**
 	 * Crea el mapa si este no ha sido creado. Posteriormente lo devuelve.

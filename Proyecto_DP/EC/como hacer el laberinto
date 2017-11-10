@@ -1,0 +1,46 @@
+kruskal:
+usar el gen aleatorios de este año
+
+1- generar paredes. (clase muro del año pasado?) y meterlo en una lista
+2- while(hay paredes){
+	3- seleccionar pared (aleatorio?)
+	4-tirar pared (solo si no ha sido tirada antes si homologo(si sus marcas son distintas))
+		5-si se ha tirado la pared se propaga la marca.
+	6- Borrar pared (de la lista)	
+}
+
+·recordar que hay que ponerle a las salas una marca para llevar el control de lo de extender la marca
+
+
+¿como repartir las armas en las salasmas transitadas?
+	apartado de gestion de caminos en el mapa.
+	
+	1- conseguir todos los caminos por id de salas (ignorar origen y destino)(0,35)(aprender a ordenar listas)
+			para ello sacar todos los caminos posibles del 0 al 35
+			cada camino como id de las salas en una lista. todos los caminos en otra lista
+	2- añadir un int FracuenciaDePaso a las salas
+	3- incrementar esta var a la sala correspondiente con cada sala de cada camino.
+	4- ordenar e insertar las armas en las salas mas recorridas(primeropor frecuencia mayor y luego por ID menor)
+		en una lista y ordenar con comparator(como se usa comparator?)
+			
+	
+	hay que guardar este elemento con todos os caminos y poder y saber ordenarlo por diferentes criterios para la defensa
+	
+	¿como hacer el CalcularTodosLosCaminos()?
+		hacer un recorrido en profundidad (backtracking) que guarde el camino cada vez que llega al final 
+		(de la 0 a la 35).
+		 
+		
+		
+		
+		
+		
+		/**
+		*Ejemplo del metodo completo que recorre los caminos ya obtenidos e incrementa
+		*/
+		for(Iterator <List<Integer>> it ==caminos.iterator(); it.hasNext() ){
+			List<Integer> camino =it.next();
+			for(Integer idSala:camino){
+				getSala(idSala).incrementarFrecuencia();
+			}
+		}
