@@ -6,7 +6,7 @@ import personaje.Personaje;
 /**
  * Clase que representa acada una de las salas 
  * del mapa en un contexto general.
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  *
  */
@@ -92,6 +92,15 @@ public class Sala {
 	 */
 	public void insertarPJ(Personaje pj) {
 		PJDentro.insertarUltimo(pj);
+	}
+
+	
+	/**
+	 * MÃ©todo que devuelve el mejor arma que se encuentre en la sala tirada.
+	 * @return Arma si existe al menos una; null en otr caso
+	 */
+	public Arma obtenerMejorArmaDeLaSala() {
+		return ArmasDentro.borrarPrimero();
 	}
 	
 }

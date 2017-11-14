@@ -1,12 +1,13 @@
 package personaje;
 
 import armas.Arma;
-import mapa.MapaS;
+import mapa.Mapa;
+import salas.ElHombrePuerta;
 
 /**
  * Clase que representa el tipo de personaje
  * Villano
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  *
  */
@@ -29,28 +30,26 @@ public class Villano extends Personaje {
 	@Override
 	public void interactuarSala() {
 		
-		/*Villanos. También recogerán de la sala el arma con mayor poder, pero dado que éstos 
-		sólo podrán llevar consigo un arma (que será configurada para cada personaje al principio 
-		de la simulación), sólo se quedarán con el arma de mayor poder entre las dos 
+		/*Villanos. Tambiï¿½n recogerï¿½n de la sala el arma con mayor poder, pero dado que estos 
+		sï¿½lo podrï¿½n llevar consigo un arma (que sera configurada para cada personaje al principio 
+		de la simulaciï¿½n), sï¿½lo se quedarï¿½n con el arma de mayor poder entre las dos 
 		(la recogida y la que llevaba previamente), dejando en la sala la de menor poder.*/
 		
 		//obtenemos el arma de mayor poder
-		MapaS grand = new MapaS();
-		int H = grand.getMapa().getAncho();
-		
-		Arma sacada = grand.getMapa().getMapita()[getDondeEstoy()%H][getDondeEstoy()/H].getArmasDentro().borrarPrimero();
+		Arma sacada = Mapa.obtenerUnico().obtenerMejorArmaDeSala(getDondeEstoy());
 		
 		//ahora comparamos con la nuestra
-		if(arma.getPoder() > sacada.getPoder()){ 
-			//si es mas poderosa, nos la quedamos para sembrar el ¡CAOS!
-			//pero antes tiramos la basuri-arma que teniamos antes :3
-			grand.getMapa().getMapita()[getDondeEstoy()%H][getDondeEstoy()/H].insertarArmaEnOrdenDePoder(arma);
-			arma = sacada;
-		} else {
-			//si la sacada no es mas potente o es igual :(
-			//pues la dejamos donde estaba
-			grand.getMapa().getMapita()[getDondeEstoy()%H][getDondeEstoy()/H].insertarArmaEnOrdenDePoder(sacada);
-
+		if(sacada != null){//si encontramos algun arma
+			if(arma.getPoder() < sacada.getPoder()){ 
+				//si es mas poderosa, nos la quedamos para sembrar el CAOS!
+				//pero antes tiramos la basuri-arma que teniamos antes :3
+				Mapa.obtenerUnico().insertarArmaEnOrdenEn(arma, getDondeEstoy());
+				arma = sacada;
+			} else {
+				//si la sacada no es mas potente o es igual :(
+				//pues la dejamos donde estaba
+				Mapa.obtenerUnico().insertarArmaEnOrdenEn(sacada, getDondeEstoy());
+			}
 		}
 		
 	}
@@ -58,30 +57,28 @@ public class Villano extends Personaje {
 
 	@Override
 	public void interactuarPuerta() {
-
-		MapaS grand = new MapaS();
-		
 		//puesto que solo tenemos un arma...
 		//...el primer paso es obtener el arma mas potente de ElHombrePuerta
-		Arma candidataDeEHP = grand.getMapa().getSalaHombrePuerta().getHp().obtenerArmaMasPotente(true);
-
-		//ahora... ¡SE ALZA LA BATALLA! ¿quien gana?
+		ElHombrePuerta hp = Mapa.obtenerUnico().obtenerEHP();
+		Arma candidataDeEHP = hp.obtenerArmaMasPotente(true);
+		
+		//ahora... ï¿½SE ALZA LA BATALLA! ï¿½quien gana?
 		if(candidataDeEHP.getPoder() > arma.getPoder()){
 			//ElHombrePuerta gana asique recupera su arma y no la pierde.
-			grand.getMapa().getSalaHombrePuerta().getHp().insertarArma(candidataDeEHP);
+			hp.insertarArma(candidataDeEHP);
 		} else {
 			//gana el Villano asique ElHombrePuerta pierde su arma.
 		}
 		
 		//por ultimo, comprobamos el estado de ElHombrePuerta para que se
 		//anoten los cambios producidos en la batalla
-		grand.getMapa().getSalaHombrePuerta().getHp().comprobarEstado();	
+		hp.comprobarEstado();	
 		
 		System.out.println("Batalla: " + getNombre() + "["+ getID() +"] contra ElHombrePuerta." + "\nArmas en la batalla: " +
 				arma.getNombre() + "[" + arma.getPoder() + "]" + "  vs  " 
 				+ candidataDeEHP.getNombre() + "[" + candidataDeEHP.getPoder() + "]" 
-				+ "\nResultado del portal -> " + grand.getMapa().getSalaHombrePuerta().getHp().isEstado());
+				+ "\nResultado del portal -> " + hp.isEstado());
 		System.out.println("set de armas de ElHombrePuerta despues de la batalla: ");
-		grand.getMapa().getSalaHombrePuerta().getHp().mostrarSetDeArmasActual();System.out.println("\n");
+		hp.mostrarSetDeArmasActual();System.out.println("\n");
 	}
 }

@@ -3,7 +3,7 @@ package salas;
 /**
  * Sala especial que contiene a ElHombrePuerta 
  * y desde la cual se puede ganar
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  */
 public class TheDailyPlanet extends Sala {
@@ -31,6 +31,9 @@ public class TheDailyPlanet extends Sala {
 	public ElHombrePuerta getHp() {
 		return hp;
 	}
+
+
+
 	
 	
 

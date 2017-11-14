@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Implementacion de arbol binario de busqueda.
  * Algunos metodos han sido creados o editaodos 
- * por @CarlosMuñozZapata
+ * por @CarlosMuï¿½ozZapata
  * @version 1.0
  * @author ?
 */
@@ -165,7 +165,7 @@ public class Arbol <T extends Comparable <T>> {
 	 * accede directamente a un metodo recursivo que 
 	 * se encarga de borrar el dato (porcompleto, y no solo marcarlo como vacio)
 	 * 
-	 * HISTORIA -> antes este metodo borraba los elementos a no ser 
+	 * @HISTORIA -> antes este metodo borraba los elementos a no ser 
 	 * que fueran justo el elemnto raiz (y no uno de los primeros hijos)
 	 * En este caso, solo marcaba el arbol como EsVacio pero no borraba el dato, y,
 	 * claro, este se seguia encontrando con el resto de metodos.
@@ -173,7 +173,7 @@ public class Arbol <T extends Comparable <T>> {
 	 * @param dato El dato que se quiere borrar.
 	*/
 	public void borrar(T dato){
-		borrarOrden(dato);
+		borrarOrden(dato); //TODO -> comprobarporque no borra el ultimo elemento dejando el arbol vacio
 //	    if(!vacio()) {
 //	        if(dato.compareTo(this.datoRaiz) < 0 && hIzq != null) {
 //	        	hIzq = hIzq.borrarOrden(dato);

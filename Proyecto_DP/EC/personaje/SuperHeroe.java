@@ -4,7 +4,8 @@ import java.util.LinkedList;
 
 import armas.Arma;
 import contenedores.Arbol;
-import mapa.MapaS;
+import mapa.Mapa;
+import salas.ElHombrePuerta;
 
 /**
  * Clase que representa el tipo de personaje
@@ -41,26 +42,27 @@ public class SuperHeroe extends Personaje {
 
 	@Override
 	public void interactuarSala() {
-		/* Superh�roes. Si no ten�a previamente este arma, ser� almacenada en su contenedor de armas 
+		/* Superh�roes. Si no tenia previamente este arma, ser� almacenada en su contenedor de armas 
 		(que debe permitir b�squedas de la forma m�s eficiente posible), mientras que si ya la ten�a, se le sumar� 
 		al poder del arma que ten�a el poder del arma que ha recogido. */
 
 		//obtenemos el arma mas potente de la sala
-		MapaS grand = new MapaS();
-		int H = grand.getMapa().getAncho();
 		
-		Arma sacada = grand.getMapa().getMapita()[getDondeEstoy()%H][getDondeEstoy()/H].getArmasDentro().borrarPrimero();
+		Arma sacada = Mapa.obtenerUnico().obtenerMejorArmaDeSala(getDondeEstoy());
 		
 		
-		//nos la quedamos :3
-		if(ArmasDelPJ.pertenece(sacada)){
-			//si ya tenemos un arma igual, �JUNTAMOS SU PODER! pero desenvainamos primero la nuestra ~
-			Arma laMia = ArmasDelPJ.obtenerBorrando(sacada);
-			//juntamos su poder y nos la guardamos
-			ArmasDelPJ.insertar(new Arma(laMia.getNombre(),(laMia.getPoder()+sacada.getPoder()))); 
-		} else {
-			//si no poseiamos ya ese arma, pues nos la quedamos ~
-			ArmasDelPJ.insertar(sacada);
+		//nos la quedamos, si existe claro :3
+		
+		if(sacada != null){
+			if(ArmasDelPJ.pertenece(sacada)){
+				//si ya tenemos un arma igual, �JUNTAMOS SU PODER! pero desenvainamos primero la nuestra ~
+				Arma laMia = ArmasDelPJ.obtenerBorrando(sacada);
+				//juntamos su poder y nos la guardamos
+				ArmasDelPJ.insertar(new Arma(laMia.getNombre(),(laMia.getPoder()+sacada.getPoder()))); 
+			} else {
+				//si no poseiamos ya ese arma, pues nos la quedamos ~
+				ArmasDelPJ.insertar(sacada);
+			}
 		}
 		
 	}
@@ -68,15 +70,12 @@ public class SuperHeroe extends Personaje {
 	@Override
 	public void interactuarPuerta() {
 
-		MapaS grand = new MapaS();
 		//primero obtenemos el arma mas potente de nuestro arsenal
 		Arma miCandidata = obtenerArmaMasPotente(true);
 		//ahora ElHombrePuerta saca su arma del mismo tipo (si la tiene)
-		Arma candidataDeEHP = grand.getMapa().getSalaHombrePuerta().getHp().obtenerBorrando(miCandidata);
-		/*TODO evitar hacer estos CHORIZOS utilizando metodos que no escalen con los get,get,get....
-		vamos, que lo que tienes que hacer es en vez de poner el chorizo, poner un metodo que sea "obtenerArmaDeCobate()" o algo
-		asi para que ese metodo ya haga lo que sea y no tenga que hacerlo el SH ni el VILLANO
-		 recordar -> (CADA UNO HACE SU FUNCION, HACE LO SUYO Y LE PIDE A LOS DEMAS LO QUE LOS DEMAS TENGAN QUE HACER)*/
+		ElHombrePuerta hp = Mapa.obtenerUnico().obtenerEHP();
+		Arma candidataDeEHP = hp.obtenerBorrando(miCandidata);
+
 		
 		//ahora... �SE ALZA LA BATALLA! �quien gana? 
 		//si el hombre puerta no tiene un arma equiparable... pues nada, no hay batalla :/
@@ -85,21 +84,21 @@ public class SuperHeroe extends Personaje {
 				//pues el super heroe ha ganado y ElHombrePuerta se queda sin arma
 			} else {
 				//pues ElHombrePuerta ha ganado asique conserva su arma.
-				grand.getMapa().getSalaHombrePuerta().getHp().insertarArma(candidataDeEHP);
+				hp.insertarArma(candidataDeEHP);
 			}
 		}
 		//el SuperHeroe siempre pierde su arma en la batalla (o el intento de...) :(
 		
 		//por ultimo, comprobamos el estado de ElHombrePuerta para que se
 		//anoten los cambios producidos en la batalla
-		grand.getMapa().getSalaHombrePuerta().getHp().comprobarEstado();
+		hp.comprobarEstado();
 		
 		System.out.println("Batalla: " + getNombre() + "["+ getID() +"] contra ElHombrePuerta." + "\nArmas en la batalla: " +
 				miCandidata.getNombre() + "[" + miCandidata.getPoder() + "]" + "  vs  " 
 				+ candidataDeEHP.getNombre() + "[" + candidataDeEHP.getPoder() + "]" 
-				+ "\nResultado del portal -> " + grand.getMapa().getSalaHombrePuerta().getHp().isEstado());
+				+ "\nResultado del portal -> " + hp.isEstado());
 		System.out.println("set de armas de ElHombrePuerta despues de la batalla: ");
-		grand.getMapa().getSalaHombrePuerta().getHp().mostrarSetDeArmasActual();System.out.println("\n");
+		hp.mostrarSetDeArmasActual();System.out.println("\n");
 	}
 	
 	
