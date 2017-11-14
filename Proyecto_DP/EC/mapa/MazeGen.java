@@ -35,11 +35,19 @@ public class MazeGen {
 	
 	//metodos----------------------
 
-	public MazeGen() {
-		// TODO Auto-generated constructor stub
-		Comparator a; //TODO -> como se usa?
-	}
 	
+	/**
+	 * Ctor
+	 */
+	public MazeGen() {}
+	
+	
+	/**
+	 * Metodo que genera el laberinto y lo aplica al mapa actual y unico
+	 * realiza los cambios necesarios para generar el laberinto en el mapa, 
+	 * EXCEPTO EN EL GRAFO -> el cual es devolvido y debe asignarse exteriormente.
+	 * @return
+	 */
 	public Grafo generarMapaAleatorio(){
 		Grafo grafoRet = new Grafo();
 		generarParedes();

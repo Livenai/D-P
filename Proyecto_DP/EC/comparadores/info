@@ -1,0 +1,2 @@
+en este paquete se guardaran las clases que implementen la interfaz Comparator. serviran para establecer los diferentes criterios de comparacion
+para las LinkedList del proyecto.
