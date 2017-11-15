@@ -23,6 +23,9 @@ public class Sala {
 	private boolean E; //derecha
 	private boolean O; //izquierda
 	
+
+	private int marca; //marcapara la creacion del laberinto
+	
 	//---------
 	
 	/**
@@ -33,10 +36,10 @@ public class Sala {
 		ID = ID_;
 		ArmasDentro = new Lista<Arma>();
 		PJDentro = new Lista<Personaje>();
-		N = false;
-		S = false;
-		E = false;
-		O = false;
+		N = true;
+		S = true;
+		E = true;
+		O = true;
 		
 		System.out.println("[!] Sala " + ID + " creada.");
 	}
@@ -102,5 +105,74 @@ public class Sala {
 	public Arma obtenerMejorArmaDeLaSala() {
 		return ArmasDentro.borrarPrimero();
 	}
+
+	
+	
+	public int getMarca() {
+		return marca;
+	}
+
+	public void setMarca(int marca) {
+		this.marca = marca;
+	}
+
+	/**
+	 * @return the n
+	 */
+	public boolean isN() {
+		return N;
+	}
+
+	/**
+	 * @param n the n to set
+	 */
+	public void setN(boolean n) {
+		N = n;
+	}
+
+	/**
+	 * @return the s
+	 */
+	public boolean isS() {
+		return S;
+	}
+
+	/**
+	 * @param s the s to set
+	 */
+	public void setS(boolean s) {
+		S = s;
+	}
+
+	/**
+	 * @return the e
+	 */
+	public boolean isE() {
+		return E;
+	}
+
+	/**
+	 * @param e the e to set
+	 */
+	public void setE(boolean e) {
+		E = e;
+	}
+
+	/**
+	 * @return the o
+	 */
+	public boolean isO() {
+		return O;
+	}
+
+	/**
+	 * @param o the o to set
+	 */
+	public void setO(boolean o) {
+		O = o;
+	}
+	
+	
+	
 	
 }

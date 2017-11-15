@@ -36,7 +36,7 @@ public class Villano extends Personaje {
 		(la recogida y la que llevaba previamente), dejando en la sala la de menor poder.*/
 		
 		//obtenemos el arma de mayor poder
-		Arma sacada = Mapa.obtenerUnico().obtenerMejorArmaDeSala(getDondeEstoy());
+		Arma sacada = Mapa.obtenerUnico().getMejorArmaDeSala(getDondeEstoy());
 		
 		//ahora comparamos con la nuestra
 		if(sacada != null){//si encontramos algun arma
@@ -59,7 +59,7 @@ public class Villano extends Personaje {
 	public void interactuarPuerta() {
 		//puesto que solo tenemos un arma...
 		//...el primer paso es obtener el arma mas potente de ElHombrePuerta
-		ElHombrePuerta hp = Mapa.obtenerUnico().obtenerEHP();
+		ElHombrePuerta hp = Mapa.obtenerUnico().getEHP();
 		Arma candidataDeEHP = hp.obtenerArmaMasPotente(true);
 		
 		//ahora... �SE ALZA LA BATALLA! �quien gana?

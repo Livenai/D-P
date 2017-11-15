@@ -1,4 +1,4 @@
-package cargador;
+package mapa;
 import java.util.Random;//para nums aleatorios
 
 /**

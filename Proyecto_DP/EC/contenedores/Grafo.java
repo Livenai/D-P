@@ -147,8 +147,7 @@ public class Grafo {
 	}
 
 	/**
-	 * Metodo que inserta un nuevo nodo en el grafo
-	 * 
+	 * Metodo que inserta un nuevo nodo en el grafo.
 	 * @param n
 	 *            es el nodo que se desea insertar
 	 * @return true si se pudo insertar

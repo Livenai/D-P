@@ -352,7 +352,7 @@ public class Mapa {
 	 * @param sala -> sala a buscar(su ID)
 	 * @return -> Arma si hay al menos una; null en otro caso
 	 */
-	public Arma obtenerMejorArmaDeSala(int sala) {
+	public Arma getMejorArmaDeSala(int sala) {
 		return UNICO.mapita[sala%UNICO.ancho][sala/UNICO.alto].obtenerMejorArmaDeLaSala();
 	}
 	
@@ -373,9 +373,29 @@ public class Mapa {
 	 * Metodo que devuelve elmejor arma de ElHombrePuerta
 	 * @return Arma si le queda alguna; null en otro caso
 	 */
-	public ElHombrePuerta obtenerEHP() {
+	public ElHombrePuerta getEHP() {
 		
 		return UNICO.getSalaHombrePuerta().getHp();
 	}
 
+	
+	/**
+	 * Metodo que devuelve la sala con el ID dado.
+	 * @param ID -> id de la sala
+	 * @return Sala
+	 */
+	public Sala getSalaConID(int ID){
+		return UNICO.mapita[ID%UNICO.ancho][ID/UNICO.alto];
+	}
+	
+	
+	/**
+	 * Metodo que devuelve la sala en las coordenadas dadas.
+	 * @param a -> Alto
+	 * @param h -> ancHo
+	 * @return  UNICO.mapita[a][h]
+	 */
+	public Sala getSalaConCoor(int a, int h){
+		return UNICO.mapita[a][h];
+	}
 }

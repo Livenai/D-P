@@ -48,7 +48,7 @@ public class SuperHeroe extends Personaje {
 
 		//obtenemos el arma mas potente de la sala
 		
-		Arma sacada = Mapa.obtenerUnico().obtenerMejorArmaDeSala(getDondeEstoy());
+		Arma sacada = Mapa.obtenerUnico().getMejorArmaDeSala(getDondeEstoy());
 		
 		
 		//nos la quedamos, si existe claro :3
@@ -73,7 +73,7 @@ public class SuperHeroe extends Personaje {
 		//primero obtenemos el arma mas potente de nuestro arsenal
 		Arma miCandidata = obtenerArmaMasPotente(true);
 		//ahora ElHombrePuerta saca su arma del mismo tipo (si la tiene)
-		ElHombrePuerta hp = Mapa.obtenerUnico().obtenerEHP();
+		ElHombrePuerta hp = Mapa.obtenerUnico().getEHP();
 		Arma candidataDeEHP = hp.obtenerBorrando(miCandidata);
 
 		
