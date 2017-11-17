@@ -1,6 +1,11 @@
 package mapa;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import armas.Arma;
+import cargador.Cargador;
+import cargador.FicheroCarga;
 import personaje.Personaje;
 import personaje.SuperHeroe;
 import personaje.Villano;
@@ -196,91 +201,7 @@ public class Mapa {
 	
 
 
-	/**
-	 * MAIN
-	 * @param args
-	 */
-	public static void main(String[] args) {//--------------------------------------------------------------------------------------		
-		Mapa accesoMapa = obtenerUnico(6,6,35,2);
-		
-		// insertamos las armas en el mapa
-		insertarArmas();
-		
-		//creamos unos cuantos personajes:
-        //con armas potentes que si no no hacen nada en la simulacion :p
-
-        SuperHeroe thor = new SuperHeroe("Thor", 'T',35);
-        thor.insertarArma(new Arma("Capa",11));
-
-        SuperHeroe ironMan = new SuperHeroe("IronMan", 'I',35);
-        ironMan.insertarArma(new Arma("Armadura",15));
-
-
-        SuperHeroe storm = new SuperHeroe("Storm", 'S',35);
-        storm.insertarArma(new Arma("CampoMagnetico",20));
-
-        SuperHeroe captainAmerica = new SuperHeroe("Capitan Am�rica", 'C',35);
-        captainAmerica.insertarArma(new Arma("Escudo",18));
-        
-        SuperHeroe cadenaDeFuegoSaltarina = new SuperHeroe("Cadena De Fuego Saltarina", 'F',35);
-        cadenaDeFuegoSaltarina.insertarArma(new Arma("CadenaFuego",14));
-
-
-        Villano deadPool = new Villano("Dead Pool", 'D', new Arma ("Sable",23),35);
-    
-
-        Villano kurtConnors = new Villano("Kurt Connors", 'K', new Arma ("CampoEnergia",24),35);
-     
-
-        Villano nebula = new Villano("Nebula", 'N', new Arma ("RayoEnergia",30),35);
-        
-        Villano octopus = new Villano("Octopus", 'O', new Arma ("Garra",15),35);
-        
-        Villano duendeVerde = new Villano("DuendeVerde", 'O', new Arma ("Acido",19),35);
-        
-        //set de villanos estandar para que abran el portal de una vez por todas :/
-        
-        Villano V1 = new Villano("V1", '1', new Arma ("Acido",19),35);
-        Villano V2 = new Villano("V2", '2', new Arma ("Acido",19),35);
-        Villano V3 = new Villano("V3", '3', new Arma ("Acido",19),35);
-        Villano V4 = new Villano("V4", '4', new Arma ("Acido",19),35);
-        Villano V5 = new Villano("V5", '5', new Arma ("Acido",19),35);
-        Villano V6 = new Villano("V6", '6', new Arma ("Acido",19),35);
-        Villano V7 = new Villano("V7", '7', new Arma ("Acido",19),35);
-
-
-     
-
-		
-		//los insertamos
-		accesoMapa.insertarPJ(35,thor);
-		accesoMapa.insertarPJ(35,ironMan);
-		accesoMapa.insertarPJ(35,storm);
-		accesoMapa.insertarPJ(35,captainAmerica);
-		accesoMapa.insertarPJ(35,cadenaDeFuegoSaltarina);
-		accesoMapa.insertarPJ(35,deadPool);
-		accesoMapa.insertarPJ(35,kurtConnors);
-		accesoMapa.insertarPJ(35,nebula);
-		accesoMapa.insertarPJ(35,octopus);
-		accesoMapa.insertarPJ(35,duendeVerde);
-		
-		accesoMapa.insertarPJ(35,V1);
-		accesoMapa.insertarPJ(35,V2);
-		accesoMapa.insertarPJ(35,V3);
-		accesoMapa.insertarPJ(35,V4);
-		accesoMapa.insertarPJ(35,V5);
-		accesoMapa.insertarPJ(35,V6);
-		accesoMapa.insertarPJ(35,V7);
-		
-		
-		accesoMapa.mostrarMapa();
-		accesoMapa.mostrarSalasConArmas();
-		
-		//iniciamos la simulacion
-		
-		iniciarSimulacion();
-
-	}//fin del MAIN-----------------------------------------------------------------------------------------------------------------
+//fin del MAIN-----------------------------------------------------------------------------------------------------------------
 
 
 	// metodos auxiliares de la clase:
@@ -290,7 +211,7 @@ public class Mapa {
 	/**
 	 * Metodo que genera e inserta las llaves en las salas
 	 */
-	private static void insertarArmas() {
+	public void insertarArmas() {
 		// Al principio se generan estas armas y se insertan en las salas:
 		
 		int[] idSalasConArmas = {1, 2, 8, 14, 15, 21, 27, 35, 28, 29, 33, 34};
@@ -336,7 +257,7 @@ public class Mapa {
 	 *  no se ha hecho correctamente, este metodo no deberia ser utiizado, pues 
 	 *  no se puede asegurar su correcto funcionamiento. 
 	 */
-	private static void iniciarSimulacion() {
+	public void iniciarSimulacion() {
 		System.out.println("\n----Iniciando Simulacion----\n");
 		System.out.println("esta simulacion es de prueba y solo realiza una interaccion \n"
 				+ "de lo que seria un turno con todos los pj en TheDailyPlanet \n\n");

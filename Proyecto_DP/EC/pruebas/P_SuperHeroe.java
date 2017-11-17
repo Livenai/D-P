@@ -11,7 +11,7 @@ import personaje.SuperHeroe;
 /**
  * juego de pruebas que probara los metodos mas 
  * conflictivos y complicados de la clase SuperHeroe
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  *
  */
@@ -19,7 +19,7 @@ public class P_SuperHeroe {
 
 	@Test
 	public void testObtenerArmaMasPotente() {
-		SuperHeroe superH = new SuperHeroe("superheroe", 'S', 0);
+		SuperHeroe superH = new SuperHeroe("superheroe", 'S', 0, 4);
 		
 		Arma a = new Arma("A",1);
 		Arma b = new Arma("B",2);

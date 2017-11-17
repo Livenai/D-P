@@ -4,7 +4,7 @@ package personaje;
  * Clase generica de los personajes del juego.
  * Cualquier personaje (heroe villano u otro) 
  * pertenecera a esta clase (herencia).
- * @author CARLOS MUÑOZ ZAPATA 
+ * @author CARLOS MUï¿½OZ ZAPATA 
  * GIIIC
  */
 public abstract class Personaje implements Comparable <Personaje>{
@@ -12,8 +12,15 @@ public abstract class Personaje implements Comparable <Personaje>{
 	private String nombre;
 	private char ID;
 	private int dondeEstoy; //ID de la sala donde se encuentra
+	/**
+	 *  turno en el que se encuentra el pj y es donde deberia realizar la siguiente accion
+	 */
+	private int turnoActual;
 	
-	//---------
+	//TODO las rutas van en linked list. para las rutas ciclicas usar un paso e insertarlo al final :p
+	//TODO el moverse no mira si hay paredes, eso lo mira el calcular ruta. El mover se hace ciegamente (no hay porque usar el Dir.E de los profes)
+	
+	//----------
 	
 	
 	/**
@@ -21,10 +28,11 @@ public abstract class Personaje implements Comparable <Personaje>{
 	 * @param nombre_
 	 * @param ID_
 	 */
-	public Personaje(String nombre_, char ID_, int enQueSalaEmpieza) {
+	public Personaje(String nombre_, char ID_, int enQueSalaEmpieza, int turnoEnElQueEmpiezan) {
 		nombre = nombre_;
 		ID = ID_;
 		dondeEstoy = enQueSalaEmpieza;
+		turnoActual = turnoEnElQueEmpiezan;
 		
 		System.out.println("[!] Personaje " + nombre + " [" + ID + "] creado.");
 	}

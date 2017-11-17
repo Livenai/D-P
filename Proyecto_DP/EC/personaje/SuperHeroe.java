@@ -25,8 +25,8 @@ public class SuperHeroe extends Personaje {
 	 * @param nombre
 	 * @param id
 	 */
-	public SuperHeroe(String nombre,char id,int dondeEstoy) {
-		super(nombre,id, dondeEstoy);		
+	public SuperHeroe(String nombre,char id,int dondeEstoy,int turno) {
+		super(nombre,id, dondeEstoy, turno);		
 		ArmasDelPJ = new Arbol<Arma>();
 		System.out.println("[!] SuperHeroe " + nombre + " [" + id + "] creado.");
 

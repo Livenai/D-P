@@ -20,9 +20,8 @@ public class Villano extends Personaje {
 	 * @param nombre
 	 * @param id
 	 */
-	public Villano(String nombre,char id, Arma armaInicial,int dondeEstoy) {
-		super(nombre,id, dondeEstoy);
-		arma = armaInicial;
+	public Villano(String nombre,char id,int dondeEstoy, int turno) {
+		super(nombre,id, dondeEstoy, turno);
 		System.out.println("[!] Villano " + nombre + " [" + id + "] creado con arma " + arma.getNombre() + "[" + arma.getPoder() + "].");
 	}
 
@@ -34,21 +33,29 @@ public class Villano extends Personaje {
 		s�lo podr�n llevar consigo un arma (que sera configurada para cada personaje al principio 
 		de la simulaci�n), s�lo se quedar�n con el arma de mayor poder entre las dos 
 		(la recogida y la que llevaba previamente), dejando en la sala la de menor poder.*/
+		//solo comprueban cual es la mejor si poseen una, si no cogen la mejor directamente
+		Mapa uni = Mapa.obtenerUnico();
 		
 		//obtenemos el arma de mayor poder
-		Arma sacada = Mapa.obtenerUnico().getMejorArmaDeSala(getDondeEstoy());
+		Arma sacada = uni.getMejorArmaDeSala(getDondeEstoy());
 		
 		//ahora comparamos con la nuestra
 		if(sacada != null){//si encontramos algun arma
-			if(arma.getPoder() < sacada.getPoder()){ 
-				//si es mas poderosa, nos la quedamos para sembrar el CAOS!
-				//pero antes tiramos la basuri-arma que teniamos antes :3
-				Mapa.obtenerUnico().insertarArmaEnOrdenEn(arma, getDondeEstoy());
+			if(arma != null){//si tenemos algun arma
+				if(arma.getPoder() < sacada.getPoder()){ 
+					//si es mas poderosa, nos la quedamos para sembrar el CAOS!
+					//pero antes tiramos la basuri-arma que teniamos antes :3
+					uni.insertarArmaEnOrdenEn(arma, getDondeEstoy());
+					arma = sacada;
+				} else {
+					//si la sacada no es mas potente o es igual :(
+					//pues la dejamos donde estaba
+					uni.insertarArmaEnOrdenEn(sacada, getDondeEstoy());
+				}
+			} else {// si no tenemos ningun arma
+				//pues la cogemos directamente
 				arma = sacada;
-			} else {
-				//si la sacada no es mas potente o es igual :(
-				//pues la dejamos donde estaba
-				Mapa.obtenerUnico().insertarArmaEnOrdenEn(sacada, getDondeEstoy());
+				
 			}
 		}
 		
