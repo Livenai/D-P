@@ -22,7 +22,7 @@ public class Villano extends Personaje {
 	 */
 	public Villano(String nombre,char id,int dondeEstoy, int turno) {
 		super(nombre,id, dondeEstoy, turno);
-		System.out.println("[!] Villano " + nombre + " [" + id + "] creado con arma " + arma.getNombre() + "[" + arma.getPoder() + "].");
+		System.out.println("[!] Villano " + nombre + " [" + id + "] creado");
 	}
 
 	

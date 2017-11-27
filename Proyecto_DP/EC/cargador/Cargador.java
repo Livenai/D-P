@@ -3,6 +3,9 @@ package cargador;
 import java.util.List;
 
 import mapa.Mapa;
+import personaje.SHExtrasensorial;
+import personaje.SHFisico;
+import personaje.SHVolador;
 import personaje.Villano;
 
 /**
@@ -108,7 +111,6 @@ public class Cargador {
 	 */
 	private void crearMap(int numCampos, List<String> vCampos){
 	    System.out.println("Creado Map: [" + vCampos.get(1) + "," + vCampos.get(2) + "] con cte [" + vCampos.get(4) + "]\n");
-	    //TODO inicializar mapa y el resto de metodos
 	    Mapa.obtenerUnico(Integer.parseInt(vCampos.get(1)),
 	    				Integer.parseInt(vCampos.get(2)),
 	    				Integer.parseInt(vCampos.get(3)),
@@ -121,8 +123,14 @@ public class Cargador {
 	 *  @param vCampos array que contiene los valores de cada atributo
 	 */
 	private void crearSHPhysical(int numCampos, List<String> vCampos){
-	    System.out.println("Creado SHPhysical: " + vCampos.get(1) + "\n");
+	    //System.out.println("[C->]Creado SHPhysical: " + vCampos.get(1) + "[" + vCampos.get(2) + "]. turno: " + vCampos.get(3)+  "\n");
 	    //Registrar SHPhysical en el mapa
+	    Mapa uni = Mapa.obtenerUnico();
+	    SHFisico v = new SHFisico(vCampos.get(1),
+	    						vCampos.get(2).charAt(0),
+	    						uni.getEsquinaNorEste().getMarca(),
+	    						Integer.parseInt(vCampos.get(3)));
+	    Mapa.obtenerUnico().insertarPJ(uni.getEsquinaNorEste().getID(), v);
 	}
 
 	/**
@@ -131,8 +139,14 @@ public class Cargador {
 	 *  @param vCampos array que contiene los valores de cada atributo
 	 */
 	private void crearSHExtraSensorial(int numCampos, List<String> vCampos){
-	    System.out.println("Creado SHExtraSensorial: " + vCampos.get(1) + "\n");
+	    //System.out.println("[C->]Creado SHExtraSensorial: " + vCampos.get(1) + "[" + vCampos.get(2) + "]. turno: " + vCampos.get(3)+  "\n");
 	    //Registrar SHExtraSensorial en el mapa
+	    Mapa uni = Mapa.obtenerUnico();
+	    SHExtrasensorial v = new SHExtrasensorial(vCampos.get(1),
+	    						vCampos.get(2).charAt(0),
+	    						uni.getEsquinaNorOeste().getMarca(),
+	    						Integer.parseInt(vCampos.get(3)));
+	    Mapa.obtenerUnico().insertarPJ(uni.getEsquinaNorOeste().getID(), v);
 	}	
 
 	/**
@@ -141,23 +155,30 @@ public class Cargador {
 	 *  @param vCampos array que contiene los valores de cada atributo
 	 */
 	private void crearSHFlight(int numCampos, List<String> vCampos){
-	    System.out.println("Creado SHFlight: " + vCampos.get(1) + "\n");
+	    //System.out.println("[C->]Creado SHFlight: " + vCampos.get(1) + "[" + vCampos.get(2) + "]. turno: " + vCampos.get(3)+  "\n");
 	    //Registrar SHFlight en el mapa
+	    Mapa uni = Mapa.obtenerUnico();
+	    SHVolador v = new SHVolador(vCampos.get(1),
+	    						vCampos.get(2).charAt(0),
+	    						uni.getEsquinaNorEste().getMarca(),
+	    						Integer.parseInt(vCampos.get(3)));
+	    Mapa.obtenerUnico().insertarPJ(uni.getEsquinaNorEste().getID(), v);
 	}	
 
 	/**
-	 *  método que crea una instancia de la clase Villain
+	 *  método que crea una instancia de la clase Villano
 	 *  @param numCampos número de atributos que tendrá la instancia
 	 *  @param vCampos array que contiene los valores de cada atributo
 	 */
 	private void crearVillain(int numCampos, List<String> vCampos){
-	    System.out.println("Creado Villano: " + vCampos.get(1) + "[" + vCampos.get(2) + "]. turno: " + vCampos.get(3)+  "\n");
-	    //Registrar Villain en el mapa
+	    //System.out.println("[C->]Creado Villano: " + vCampos.get(1) + "[" + vCampos.get(2) + "]. turno: " + vCampos.get(3)+  "\n");
+	    //Registrar Villano en el mapa
+	    Mapa uni = Mapa.obtenerUnico();
 	    Villano v = new Villano(vCampos.get(1),
 	    						vCampos.get(2).charAt(0),
-	    						Mapa.getEsquinaNorEste()),
+	    						uni.getEsquinaNorEste().getMarca(),
 	    						Integer.parseInt(vCampos.get(3)));
-	    Mapa.obtenerUnico().insertarPJ(getEsquinaNorEste, pj);//TODO terminar esto
+	    Mapa.obtenerUnico().insertarPJ(uni.getEsquinaNorEste().getID(), v);
 	}
 
 }

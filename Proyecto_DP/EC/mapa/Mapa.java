@@ -1,14 +1,8 @@
 package mapa;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import armas.Arma;
-import cargador.Cargador;
-import cargador.FicheroCarga;
+import contenedores.Grafo;
 import personaje.Personaje;
-import personaje.SuperHeroe;
-import personaje.Villano;
 import salas.ElHombrePuerta;
 import salas.Sala;
 import salas.TheDailyPlanet;
@@ -25,8 +19,10 @@ public class Mapa {
 	//elemento unico que representa el mapa unico del juego
 	private static Mapa UNICO;
 	
-	//[alto][ancho]   [ID/ancho][ID%ancho] so GOOD
+	
+	//[alto][ancho]   [ID/alto][ID%ancho] so GOOD 
 	private  Sala[][] mapita; // tablero con todas las salas
+	private Grafo grafo; //grafo asociado al mapa
 	private  TheDailyPlanet SalaHombrePuerta; // puntero a la sala de ElHombrePuerta
 	private  int ancho;
 	private  int alto;
@@ -139,18 +135,18 @@ public class Mapa {
 		    }
 		    System.out.println();
 		    
-		    for(int j = 0; j < alto; j++) {
+		    for(int j = 0; j < alto; j++) {//alto
 		        System.out.print("|");
-		        for(int i = 0; i < ancho; i++) {
-		            if(mapita[i][j].getPJDentro().obtenerTam() > 1) {
-		                System.out.print(""+mapita[i][j].getPJDentro().obtenerTam());
-		            } else if(mapita[i][j].getPJDentro().obtenerTam() == 1) {
-		                System.out.print(""+mapita[i][j].getPJDentro().obtenerElemento(0).getID());
+		        for(int i = 0; i < ancho; i++) {//ancho
+		            if(mapita[j][i].getPJDentro().obtenerTam() > 1) {
+		                System.out.print(""+mapita[j][i].getPJDentro().obtenerTam());
+		            } else if(mapita[j][i].getPJDentro().obtenerTam() == 1) {
+		                System.out.print(""+mapita[j][i].getPJDentro().obtenerElemento(0).getID());
 		            } else {
 		                if(j == alto - 1) {
 		                    System.out.print("_");
 		                } else
-		                	if(/*hayMuroS(i, j)*/false) {
+		                	if(mapita[j][i].isS()) {
 		                    System.out.print("_");
 		                } else {
 		                    System.out.print(" ");
@@ -159,7 +155,7 @@ public class Mapa {
 		            
 		            if(i == ancho - 1) {
 		                System.out.print("|");
-		            } else if(/*hayMuroD(i, j)*/false) {
+		            } else if(mapita[j][i].isE()) {//TODO mapa2D ¿estan bien el como se muestran los muros?
 		                System.out.print("|");
 		            } else {
 		                System.out.print(" ");
@@ -274,7 +270,7 @@ public class Mapa {
 	 * @return -> Arma si hay al menos una; null en otro caso
 	 */
 	public Arma getMejorArmaDeSala(int sala) {
-		return UNICO.mapita[sala%UNICO.ancho][sala/UNICO.alto].obtenerMejorArmaDeLaSala();
+		return UNICO.mapita[sala/UNICO.alto][sala%UNICO.ancho].obtenerMejorArmaDeLaSala();
 	}
 	
 	
@@ -286,7 +282,7 @@ public class Mapa {
 	 * @return
 	 */
 	public void insertarArmaEnOrdenEn(Arma a, int salaID) {
-		UNICO.mapita[salaID%UNICO.ancho][salaID/UNICO.alto].insertarArmaEnOrdenDePoder(a);;
+		UNICO.mapita[salaID/UNICO.alto][salaID%UNICO.ancho].insertarArmaEnOrdenDePoder(a);;
 	}
 
 	
@@ -306,7 +302,7 @@ public class Mapa {
 	 * @return Sala
 	 */
 	public Sala getSalaConID(int ID){
-		return UNICO.mapita[ID%UNICO.ancho][ID/UNICO.alto];
+		return UNICO.mapita[ID/UNICO.alto][ID%UNICO.ancho];
 	}
 	
 	
@@ -318,5 +314,49 @@ public class Mapa {
 	 */
 	public Sala getSalaConCoor(int a, int h){
 		return UNICO.mapita[a][h];
+	}
+
+	/**
+	 * Metodo que devuelve la sala en
+	 * la esquina NE (superior derecha)
+	 * @return Sala
+	 */
+	public Sala getEsquinaNorEste() {
+		return this.getSalaConCoor(0, this.ancho-1);
+	}
+	
+	/**
+	 * Metodo que devuelve la sala en
+	 * la esquina NO (superior izquierda)
+	 * @return Sala
+	 */
+	public Sala getEsquinaNorOeste() {
+		return this.getSalaConCoor(0, 0);
+	}
+	
+	/**
+	 * Metodo que devuelve la sala en
+	 * la esquina SE (inferior derecha)
+	 * @return Sala
+	 */
+	public Sala getEsquinaSurEste() {
+		return this.getSalaConCoor(this.alto-1, this.ancho-1);
+	}
+	
+	/**
+	 * Metodo que devuelve la sala en
+	 * la esquina SO (inferior izquierda)
+	 * @return Sala
+	 */
+	public Sala getEsquinaSurOeste() {
+		return this.getSalaConCoor(this.alto-1, 0);
+	}
+
+	public void setGrafo(Grafo g) {
+		grafo = g;
+	}
+
+	public boolean hayMuroEntre(int A, int B) {
+		return (!grafo.adyacente(A, B));
 	}
 }

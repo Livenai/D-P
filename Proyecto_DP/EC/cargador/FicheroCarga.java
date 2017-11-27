@@ -28,8 +28,14 @@ public class FicheroCarga {
 	     System.out.println( "Procensando el fichero..." );
 	     bufferIn = new BufferedReader(new FileReader(nombreFichero));//creación del filtro asociado al flujo de datos
 
-         while((S=bufferIn.readLine())!= null) {
+	     bufferIn.mark(9999); //las proximas 5 lineas (incluida esta)son para que se muestre el contenido del fichero por consola.
+	     while((S=bufferIn.readLine())!= null) {
 	     	 System.out.println( "S: "+S );
+	     }
+	     bufferIn.reset();
+	     
+         while((S=bufferIn.readLine())!= null) {
+	     	 //System.out.println( "S: "+S );
   	 		 if (!S.startsWith("--"))  {
   	 			 vCampos.clear();
   	 			 numCampos = trocearLinea(S, vCampos);

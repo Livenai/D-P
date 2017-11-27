@@ -40,6 +40,7 @@ public class Sala {
 		S = true;
 		E = true;
 		O = true;
+		marca = ID_;
 		
 		System.out.println("[!] Sala " + ID + " creada.");
 	}
@@ -171,7 +172,16 @@ public class Sala {
 	public void setO(boolean o) {
 		O = o;
 	}
+
+	public int getID() {
+		return this.ID;
+	}
 	
+	@Override
+	public String toString(){
+		return ("Sala[" + this.ID + "]. pj´s: " + this.PJDentro.obtenerTam() + " ,armas: " + this.ArmasDentro.obtenerTam() + ".");
+		
+	}
 	
 	
 	

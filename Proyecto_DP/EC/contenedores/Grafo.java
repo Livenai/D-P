@@ -363,10 +363,8 @@ public class Grafo {
 	 *            es el primer nodo
 	 * @param destino
 	 *            es el segundo nodo
-	 * @param sig
-	 *            parametro de entrada salida que devuelve el siguiente nodo en
+	 * @return (int) devuelve el siguiente nodo en
 	 *            la ruta entre origen y destino
-	 * @return No retorna ningun valor
 	 */
 	public int siguiente(int origen, int destino) {
 		int sig = -1; // Si no hay camino posible
@@ -379,6 +377,43 @@ public class Grafo {
 			}
 		}
 		return sig;
+	}
+
+	/**
+	 * Metodo que devuelve la distancia minima en NODOS entre A y B
+	 * no tiene en cuenta el peso de los arcos.
+	 * @param A -> origen
+	 * @param B -> destino
+	 * @return int
+	 */
+	public int distanciaMinimaEntre(int A, int B) {
+		int ret = 1;
+		int aux = A;
+		int sig = siguiente(aux, B);
+		System.out.println("a:" + A + " b:" + B);
+		while(sig != B){
+			
+			ret++;
+			aux = sig;
+			sig = siguiente(aux, B);
+		}
+		System.out.println("ret:" + ret);
+		return ret;
+	}
+	
+	/**
+	 * Dice si la distancia entre A y B es de 3 o no
+	 * @param A origen
+	 * @param B destino
+	 * @return bool. True -> dir==3
+	 */
+	public boolean disIgualATres(int A, int B){
+		boolean ret = false;
+		int dis = distanciaMinimaEntre(A, B);
+		if(dis == 3){
+			ret = true;
+		}
+		return ret;
 	}
 
 
