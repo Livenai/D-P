@@ -3,13 +3,10 @@ package main;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import armas.Arma;
 import cargador.Cargador;
 import cargador.FicheroCarga;
 import mapa.Mapa;
 import mapa.MazeGen;
-import personaje.SuperHeroe;
-import personaje.Villano;
 
 /**
  * Clase con solo el MAIN del proyecto para tenerlo facilmente localizado
@@ -46,7 +43,7 @@ public class Main {
 		
 		//iniciamos la simulacion
 		
-		//Mapa.obtenerUnico().iniciarSimulacion();
+		Mapa.obtenerUnico().iniciarSimulacion();
 
 	}//fin del MAIN-----------------------------------------------------------------------------------------------------------------
 

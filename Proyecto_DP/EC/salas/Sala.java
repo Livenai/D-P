@@ -2,6 +2,7 @@ package salas;
 import armas.Arma;
 import contenedores.Lista;
 import personaje.Personaje;
+import personaje.Villano;
 
 /**
  * Clase que representa acada una de las salas 
@@ -181,6 +182,42 @@ public class Sala {
 	public String toString(){
 		return ("Sala[" + this.ID + "]. pj´s: " + this.PJDentro.obtenerTam() + " ,armas: " + this.ArmasDentro.obtenerTam() + ".");
 		
+	}
+
+	/**
+	 * Metodo que procesa el turno de todos los personajes dentro de la sala.
+	 * Mo tiene en cuenta si el pj ha sido procesado antes o no.
+	 */
+	public void procesarTurnos() {
+		for (int i = 0; i < PJDentro.obtenerTam(); i++) {
+			PJDentro.obtenerElemento(i).procesarTurno();
+		}
+		
+	}
+
+	/**
+	 * Devuelve el primer Villano que encuentra en la sala.
+	 * TRUE -> borra al Villano de la sala
+	 * FALSE -> Solo devuelve al villano
+	 * @return Villano, null si no hay
+	 */
+	public Villano sacarPrimerVillano(boolean borrar) {
+		Personaje ret = null;
+		boolean encontrado = false;
+		int i;
+		for (i = 0; encontrado && i < PJDentro.obtenerTam(); i++) {
+			ret = PJDentro.borrarElemento(i);
+			if(ret instanceof Villano){
+				encontrado = true;
+			} else {
+				PJDentro.insertarElemento(ret, i);
+			}
+		}
+		if(borrar){
+			PJDentro.insertarElemento(ret, i);
+		}
+		
+		return (Villano) ret;
 	}
 	
 	

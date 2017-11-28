@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import armas.Arma;
+import personaje.SHFisico;
 import personaje.SuperHeroe;
 
 
@@ -19,7 +20,7 @@ public class P_SuperHeroe {
 
 	@Test
 	public void testObtenerArmaMasPotente() {
-		SuperHeroe superH = new SuperHeroe("superheroe", 'S', 0, 4);
+		SuperHeroe superH = new SHFisico("superheroe", 'S', 0, 4);
 		
 		Arma a = new Arma("A",1);
 		Arma b = new Arma("B",2);

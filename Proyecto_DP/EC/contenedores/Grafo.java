@@ -390,14 +390,12 @@ public class Grafo {
 		int ret = 1;
 		int aux = A;
 		int sig = siguiente(aux, B);
-		System.out.println("a:" + A + " b:" + B);
 		while(sig != B){
 			
 			ret++;
 			aux = sig;
 			sig = siguiente(aux, B);
 		}
-		System.out.println("ret:" + ret);
 		return ret;
 	}
 	

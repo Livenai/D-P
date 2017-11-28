@@ -26,6 +26,8 @@ public class Mapa {
 	private  TheDailyPlanet SalaHombrePuerta; // puntero a la sala de ElHombrePuerta
 	private  int ancho;
 	private  int alto;
+	
+	public static final int MAXTURNOS = 5; //turnos maximos de simulacion
 	//---------
 
 	/**
@@ -129,7 +131,7 @@ public class Mapa {
 	 * el formato dado
 	 */
 	public void mostrarMapa(){
-		System.out.println("Mostrando el mapa:");
+		System.out.println("\nMostrando el mapa:");
 		 for (int i = 0; i < ancho; i++) {
 		        System.out.print(" _");
 		    }
@@ -254,14 +256,38 @@ public class Mapa {
 	 *  no se puede asegurar su correcto funcionamiento. 
 	 */
 	public void iniciarSimulacion() {
-		System.out.println("\n----Iniciando Simulacion----\n");
-		System.out.println("esta simulacion es de prueba y solo realiza una interaccion \n"
-				+ "de lo que seria un turno con todos los pj en TheDailyPlanet \n\n");
+		System.out.println("\n------------------------------Iniciando Simulacion------------------------------\n");
 		
-		
-		for (int i = 0; i < UNICO.SalaHombrePuerta.getPJDentro().obtenerTam(); i++) {
-			UNICO.SalaHombrePuerta.getPJDentro().obtenerElemento(i).interactuarPuerta();
+		/*la simulacion consiste en
+		 * 1- recorrer todas las sala
+		 * 		a- Para cada sala, procesar el turno de todos los pj
+		 * 		b- Si un pj ya ha sido procesado este turno, no vuelve a ser procesado
+		 * 2- anotar los cambios que produce lasimulación
+		 * 3- repetir hasta el numero maximo de turnos (cte MAXTURNOS)
+		 */
+		for (int T = 0; T < MAXTURNOS; T++) {
+			//turnos
+			System.out.println("____________________________________             \t_______________________________\n"
+					+ "____________________________________  Turno:\t" + T + "\t_______________________________\n"
+							+ "_______________________________________________________________________________________\n");
+			
+			for (int i = 0; i < alto; i++) {
+				for (int j = 0; j < ancho; j++) {
+					Sala candidata = getSalaConCoor(i, j);
+					candidata.procesarTurnos();
+					
+				}
+			}
+
+			mostrarMapa();
+			System.out.println("_______________________________________________________________________________________");
 		}
+		
+		
+
+		
+		
+
 	}
 
 	/**
@@ -282,7 +308,8 @@ public class Mapa {
 	 * @return
 	 */
 	public void insertarArmaEnOrdenEn(Arma a, int salaID) {
-		UNICO.mapita[salaID/UNICO.alto][salaID%UNICO.ancho].insertarArmaEnOrdenDePoder(a);;
+		UNICO.mapita[salaID/UNICO.alto][salaID%UNICO.ancho].insertarArmaEnOrdenDePoder(a);
+		
 	}
 
 	

@@ -110,7 +110,6 @@ public class MazeGen {
 	 * Tira tantos muros como el 5% de las salas del mapa.
 	 */
 	private void tirarAtajos() {
-		System.out.println("-> atajos");
 		Mapa uni = Mapa.obtenerUnico();
 		int H = Mapa.obtenerUnico().getAncho();
 		int A = Mapa.obtenerUnico().getAlto();

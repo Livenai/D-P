@@ -128,9 +128,9 @@ public class Cargador {
 	    Mapa uni = Mapa.obtenerUnico();
 	    SHFisico v = new SHFisico(vCampos.get(1),
 	    						vCampos.get(2).charAt(0),
-	    						uni.getEsquinaNorEste().getMarca(),
+	    						uni.getEsquinaNorOeste().getMarca(),
 	    						Integer.parseInt(vCampos.get(3)));
-	    Mapa.obtenerUnico().insertarPJ(uni.getEsquinaNorEste().getID(), v);
+	    Mapa.obtenerUnico().insertarPJ(uni.getEsquinaNorOeste().getID(), v);
 	}
 
 	/**
@@ -160,9 +160,9 @@ public class Cargador {
 	    Mapa uni = Mapa.obtenerUnico();
 	    SHVolador v = new SHVolador(vCampos.get(1),
 	    						vCampos.get(2).charAt(0),
-	    						uni.getEsquinaNorEste().getMarca(),
+	    						uni.getEsquinaSurOeste().getMarca(),
 	    						Integer.parseInt(vCampos.get(3)));
-	    Mapa.obtenerUnico().insertarPJ(uni.getEsquinaNorEste().getID(), v);
+	    Mapa.obtenerUnico().insertarPJ(uni.getEsquinaSurOeste().getID(), v);
 	}	
 
 	/**
