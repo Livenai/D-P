@@ -2,6 +2,7 @@ package salas;
 import armas.Arma;
 import contenedores.Lista;
 import personaje.Personaje;
+import personaje.SuperHeroe;
 import personaje.Villano;
 
 /**
@@ -96,6 +97,7 @@ public class Sala {
 	 * @param pj
 	 */
 	public void insertarPJ(Personaje pj) {
+		if(pj == null){System.out.println("--------------> id " + ID);}
 		PJDentro.insertarUltimo(pj);
 	}
 
@@ -189,8 +191,15 @@ public class Sala {
 	 * Mo tiene en cuenta si el pj ha sido procesado antes o no.
 	 */
 	public void procesarTurnos() {
+		//obtendremos del metodo procesarTurno() un booleano que nos dira si el pj se ha movido.
+		//en caso de que el pj semueva, restamos1 a i para que vuelva a cojer al primero en
+		//la proxima iteracion.
 		for (int i = 0; i < PJDentro.obtenerTam(); i++) {
-			PJDentro.obtenerElemento(i).procesarTurno();
+			boolean seHaMovido = PJDentro.obtenerElemento(i).procesarTurno();
+			
+			if(seHaMovido){
+				i--;
+			}
 		}
 		
 	}
@@ -218,6 +227,62 @@ public class Sala {
 		}
 		
 		return (Villano) ret;
+	}
+
+	/**
+	 * Devuelve el primer SuperHeroe que encuentra en la sala.
+	 * TRUE -> borra al SH de la sala
+	 * FALSE -> Solo devuelve al SH
+	 * @return SuperHeroe, null si no hay
+	 */
+	public SuperHeroe sacarPrimerSH(boolean borrar) {
+		Personaje ret = null;
+		boolean encontrado = false;
+		int i;
+		for (i = 0; encontrado && i < PJDentro.obtenerTam(); i++) {
+			ret = PJDentro.borrarElemento(i);
+			if(ret instanceof SuperHeroe){
+				encontrado = true;
+			} else {
+				PJDentro.insertarElemento(ret, i);
+			}
+		}
+		if(borrar){
+			PJDentro.insertarElemento(ret, i);
+		}
+		
+		return (SuperHeroe) ret;
+	}
+
+	/**
+	 * Muestra todos los pj de la sala
+	 */
+	public void mostrarPJ() {
+		for (int i = 0; i < PJDentro.obtenerTam(); i++) {
+			System.out.println(PJDentro.obtenerElemento(i).toString());
+		}
+	}
+
+	/**
+	 * Metodo que sacade la sala al pj si este se encuentra y lo devuelve. 
+	 * En caso de no estar no hace nada y devuelve null.
+	 * @param yo -> Personaje asacar
+	 * @return -> Prsonaje si esta en la sala; null en otro caso
+	 */
+	public Personaje SacarPJ(Personaje yo) {
+		Personaje ret = null;
+		Personaje candidato;
+		boolean encontrado = false;
+		
+		//buscamos al pj en la sala hasta encontrarlo, lo borramos y lo devolvemos
+		for (int i = 0; encontrado != true && i < PJDentro.obtenerTam(); i++) {
+			candidato = PJDentro.obtenerElemento(i);
+			if(candidato.equals(yo)){
+				ret = PJDentro.borrarElemento(i);
+				encontrado = true;
+			}
+		}		
+		return ret;
 	}
 	
 	

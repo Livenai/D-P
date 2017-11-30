@@ -2,6 +2,8 @@ package personaje;
 
 import java.util.LinkedList;
 
+import mapa.Mapa;
+
 /**
  * Clase generica de los personajes del juego.
  * Cualquier personaje (heroe villano u otro) 
@@ -17,7 +19,8 @@ public abstract class Personaje implements Comparable <Personaje>{
 	/**
 	 *  turno en el que se encuentra el pj y es donde deberia realizar la siguiente accion
 	 */
-	private int turnoActual;
+	private int turnoDelPJ;
+	
 	
 	/**
 	 * Ruta que el personaje seguira.
@@ -44,7 +47,8 @@ public abstract class Personaje implements Comparable <Personaje>{
 		nombre = nombre_;
 		ID = ID_;
 		dondeEstoy = enQueSalaEmpieza;
-		turnoActual = turnoEnElQueEmpiezan;
+		turnoDelPJ = turnoEnElQueEmpiezan;
+		calcularRuta();
 		
 		System.out.println("[!] Personaje " + nombre + " [" + ID + "] creado.");
 	}
@@ -117,24 +121,44 @@ public abstract class Personaje implements Comparable <Personaje>{
 	/**
 	 * Metodo que procesa el turno de un pj,
 	 *  solo si el pj no ha sido procesado antes.
+	 *  @return dicesi se ha movido el pj. True=se ha movido
 	 */
-	public void procesarTurno(){
+	public boolean procesarTurno(){
 		//se procesa el turno en el siguiente orden
-		interactuarPuerta();
-		mover();
-		interactuarSala();
-		interactuarConOtrosPJ();
+		//solo si te toca y si la simulación continua
+		boolean movido = false;
+		if(!Mapa.obtenerUnico().FINSIMULACION &&
+				this.turnoDelPJ <= Mapa.obtenerUnico().getTurno()){
+			interactuarPuerta();
+			movido = mover();
+			interactuarSala();
+			interactuarConOtrosPJ();
+			turnoDelPJ++;
+		}
+		return movido;
 	}
 	
 	
 	/**
-	 * Metodo que realiza el movimiento propio del persinaje.
-	 * Este movimiento dependera del tipo de personaje. 
-	 * (y de las rutas que este siga)
+	 * Metodo que realiza el movimiento propio del personaje.
+	 * Este movimiento dependera del tipo de personaje (y de las rutas que este siga). 
+	 * El PJ no se mueve si esta en TheDailyPlanet
+	 * 
+	 * (se mueve ciegamente, fiel a la ruta)
+	 * @return true -> si el pj se ha movido
 	 */
-	public void mover(){
-		System.out.println("interactuarConOtrosPJ Villano -> " + toString());	
-		//TODO -> el mover de los pj (leer la ruta)
+	public boolean mover(){
+		boolean ret = false;
+		if(this.dondeEstoy != Mapa.obtenerUnico().getSalaHombrePuerta().getID()){
+			char dir = ruta.removeFirst();
+	
+			Mapa.obtenerUnico().moverPJconDir(this, this.dondeEstoy, dir);
+			
+			ruta.addLast(dir);
+			ret = true;
+		}
+		
+		return ret;
 	}
 	
 	
@@ -152,6 +176,33 @@ public abstract class Personaje implements Comparable <Personaje>{
 	public abstract String toString();
 	
 	
+	
+	
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Personaje other = (Personaje) obj;
+		if (ID != other.ID)
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		return true;
+	}
+
+
 	/**
 	 * Metodo que calcula la ruta del personaje.
 	 *  La ruta obtenida depende del tipo de personaje que sea.

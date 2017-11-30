@@ -60,9 +60,16 @@ public abstract class SuperHeroe extends Personaje {
 				Arma laMia = ArmasDelPJ.obtenerBorrando(sacada);
 				//juntamos su poder y nos la guardamos
 				ArmasDelPJ.insertar(new Arma(laMia.getNombre(),(laMia.getPoder()+sacada.getPoder()))); 
+				
+				System.out.println("[A] El superheroe " + this.getNombre() + "[" + this.getID() + "] ha mejorado su arma " +
+									laMia.getNombre() + " de " + laMia.getPoder() + " a " + (laMia.getPoder()+sacada.getPoder()) + ".");
+				
 			} else {
 				//si no poseiamos ya ese arma, pues nos la quedamos ~
 				ArmasDelPJ.insertar(sacada);
+				
+				System.out.println("[A] El superheroe " + this.getNombre() + "[" + this.getID() + "] ha obtenido el arma " +
+						sacada.toString());
 			}
 		}
 		
@@ -87,12 +94,22 @@ public abstract class SuperHeroe extends Personaje {
 			//ahora... �SE ALZA LA BATALLA! �quien gana? 
 			//si el hombre puerta no tiene un arma equiparable... pues nada, no hay batalla :/
 			if(candidataDeEHP != null){ 
+				
+				System.out.println("[B] Batalla: " + getNombre() + "["+ getID() +"]  contra  ElHombrePuerta." + "\n\tArmas en la batalla: " +
+						miCandidata.getNombre() + "[" + miCandidata.getPoder() + "]" + "  vs  " 
+						+ candidataDeEHP.getNombre() + "[" + candidataDeEHP.getPoder() + "]" 
+						+ "\n\tResultado del portal, ¿Abierto? -> " + hp.isEstado());
+				
 				if(miCandidata.getPoder() > candidataDeEHP.getPoder()){ // si gana el SuperHeroe
 					//pues el super heroe ha ganado y ElHombrePuerta se queda sin arma
 				} else {
 					//pues ElHombrePuerta ha ganado asique conserva su arma.
 					hp.insertarArma(candidataDeEHP);
 				}
+				
+				System.out.println("[set] Armas de ElHombrePuerta DESPUES de la batalla: ");
+				hp.mostrarSetDeArmasActual();
+				System.out.println("\n");
 			}
 			//el SuperHeroe siempre pierde su arma en la batalla (o el intento de...) :(
 			
@@ -100,12 +117,16 @@ public abstract class SuperHeroe extends Personaje {
 			//anoten los cambios producidos en la batalla
 			hp.comprobarEstado();
 			
-			System.out.println("Batalla: " + getNombre() + "["+ getID() +"] contra ElHombrePuerta." + "\nArmas en la batalla: " +
-					miCandidata.getNombre() + "[" + miCandidata.getPoder() + "]" + "  vs  " 
-					+ candidataDeEHP.getNombre() + "[" + candidataDeEHP.getPoder() + "]" 
-					+ "\nResultado del portal -> " + hp.isEstado());
-			System.out.println("set de armas de ElHombrePuerta despues de la batalla: ");
-			hp.mostrarSetDeArmasActual();System.out.println("\n");
+			//y si se ha abierto el portal, nos colamos :P
+			if(hp.isEstado() == true){
+				//hemos ganado y se termina la simulacion ~
+				
+				System.out.println("[WIN] ¡¡¡El personaje " + this.getNombre() + "[" + this.getID() + "] ha cruzado el portal!!!");
+				Mapa.obtenerUnico().finSimulacion(this);
+			}
+			
+
+
 		}
 		
 	}
@@ -119,7 +140,7 @@ public abstract class SuperHeroe extends Personaje {
 	 * @return el arma mas potente
 	 */
 	public Arma obtenerArmaMasPotente(boolean borrar){
-		Arma ret = new Arma("a pu�etazo limpio",-1);
+		Arma ret = new Arma("a punietazo limpio",-1);
 		//primaro obtenemos las armas que que tenemos disponibles
 		LinkedList<Arma> ll = ArmasDelPJ.inOrden();
 		
@@ -154,7 +175,7 @@ public abstract class SuperHeroe extends Personaje {
 		//Capturará al primer Villano que se encuentre en la sala sólo 
 		//si este personaje posee un arma igual a la que posee el villano y tiene mayor poder.
 		Mapa uni = Mapa.obtenerUnico();
-		Sala salaActual = uni.getSalaConID(this.getID());
+		Sala salaActual = uni.getSalaConID(this.getDondeEstoy());
 		
 		//1º) bucamos al primer villano (si no hay ninguno no se hace nada)
 		Villano elPrimero = salaActual.sacarPrimerVillano(false);
@@ -179,20 +200,22 @@ public abstract class SuperHeroe extends Personaje {
 
 	
 	/**
-	 * Metodo que devuelve el arma que posea el SH similar (mismo nombre)
+	 * Metodo que devuelve (y borra) el arma que posea el SH similar (mismo nombre)
 	 * a la insertada. Si no tiene dcho arma, devuelve null
 	 * @param cand -> arma similar
 	 * @return arma si la tiene, null en otro caso
 	 */
-	private Arma getArmaIgualA(Arma cand) {
+	public Arma getArmaIgualA(Arma cand) {
 		return ArmasDelPJ.obtenerBorrando(cand);
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
-	public abstract String toString();
+	public abstract String toString() ;
+
+	@Override
+	public abstract void calcularRuta();
+
+
 	
 	
 

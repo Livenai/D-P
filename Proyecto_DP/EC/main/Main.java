@@ -31,19 +31,21 @@ public class Main {
 		}
 		
 		//TODO IMPORTANTE -> hay que poner un atributo con la sala inicio, final y las 4 esquinas y usarlos con metodos para que al cambiar esta parte solo sea cambiarel emtodo
+		Mapa uni = Mapa.obtenerUnico();
+		
 		
 		
 		//generamos nuestro laberinto
 		MazeGen generador = new MazeGen();
 		generador.generarMapaAleatorio();
 		// insertamos las armas en el mapa
-		Mapa.obtenerUnico().insertarArmas();		
-		Mapa.obtenerUnico().mostrarMapa();
-		Mapa.obtenerUnico().mostrarSalasConArmas();
+		uni.insertarArmas();		
+		uni.mostrarMapa();
+		uni.mostrarSalasConArmas();
 		
 		//iniciamos la simulacion
-		
-		Mapa.obtenerUnico().iniciarSimulacion();
+		uni.mostrarPJ();
+		uni.iniciarSimulacion();
 
 	}//fin del MAIN-----------------------------------------------------------------------------------------------------------------
 

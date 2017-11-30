@@ -26,8 +26,10 @@ public class Mapa {
 	private  TheDailyPlanet SalaHombrePuerta; // puntero a la sala de ElHombrePuerta
 	private  int ancho;
 	private  int alto;
+	private int turnoActual;//turno actual de la simulación
 	
-	public static final int MAXTURNOS = 5; //turnos maximos de simulacion
+	public static final int MAXTURNOS = 50; //turnos maximos de simulacion
+	public boolean FINSIMULACION = false; //dice si se ha terminado la simulación debidoa que alguien ha cruzado el portal
 	//---------
 
 	/**
@@ -49,6 +51,7 @@ public class Mapa {
 		//creamos la sala especial y la metemos en la posicion dicha
 		SalaHombrePuerta = new TheDailyPlanet(35, 4);
 		mapita[alto-1][ancho-1] = SalaHombrePuerta;
+		turnoActual = 0;
 		System.out.println("[!] Mapa creado");
 	}
 	
@@ -70,6 +73,7 @@ public class Mapa {
 		//creamos la sala especial y la metemos en la posicion dicha
 		SalaHombrePuerta = new TheDailyPlanet(TheDailyPlanet, cteApertura);
 		mapita[TheDailyPlanet/ancho][ TheDailyPlanet%ancho] = SalaHombrePuerta;
+		turnoActual = 0;
 		System.out.println("[!] Mapa creado con medidas ANCHO: " + ancho + " ;ALTO: " + alto + " (" + ancho*alto + " salas)");
 	}
 	
@@ -157,7 +161,7 @@ public class Mapa {
 		            
 		            if(i == ancho - 1) {
 		                System.out.print("|");
-		            } else if(mapita[j][i].isE()) {//TODO mapa2D ¿estan bien el como se muestran los muros?
+		            } else if(mapita[j][i].isE()) {
 		                System.out.print("|");
 		            } else {
 		                System.out.print(" ");
@@ -265,7 +269,7 @@ public class Mapa {
 		 * 2- anotar los cambios que produce lasimulación
 		 * 3- repetir hasta el numero maximo de turnos (cte MAXTURNOS)
 		 */
-		for (int T = 0; T < MAXTURNOS; T++) {
+		for (int T = 0; !FINSIMULACION && T < MAXTURNOS; T++,turnoActual++) {
 			//turnos
 			System.out.println("____________________________________             \t_______________________________\n"
 					+ "____________________________________  Turno:\t" + T + "\t_______________________________\n"
@@ -385,5 +389,64 @@ public class Mapa {
 
 	public boolean hayMuroEntre(int A, int B) {
 		return (!grafo.adyacente(A, B));
+	}
+
+	public void mostrarPJ() {
+		System.out.println("Mostrando Personajes:\n");
+		for (int i = 0; i < alto; i++) {
+			for (int j = 0; j < ancho; j++) {
+				getSalaConCoor(i, j).mostrarPJ();
+			}
+		}
+		System.out.println("---------------------\n");
+		
+	}
+
+	public int getTurno() {
+		return turnoActual;
+	}
+
+	
+	/**
+	 * Metodo que mueve un pj de la sala origen (salaActual) a la
+	 *  destino en función de la dirección.
+	 * @param yo -> Personaje
+	 * @param salaActual -> ID de la sala origen
+	 * @param dir -> Char. Direccion de movimiento (N,S,E,O)
+	 */
+	public void moverPJconDir(Personaje yo, int salaActual, char dir) {
+		//primero sacamos al pj de si sala origen
+		Sala origen = getSalaConID(salaActual);
+		Personaje pj = origen.SacarPJ(yo);
+
+		//ahora nos insertamos en la sala destino
+		Sala destino = null;
+		switch(dir){
+		case 'N':
+			destino = getSalaConID(origen.getID()-ancho);
+			break;
+		case 'S':
+			destino = getSalaConID(origen.getID()+ancho);
+			break;
+		case 'E':
+			destino = getSalaConID(origen.getID()+1);
+			break;
+		case 'O':
+			destino = getSalaConID(origen.getID()-1);
+			break;
+		}
+		if(destino != null){
+			destino.insertarPJ(pj);
+			yo.setDondeEstoy(destino.getID());
+		} else {
+			System.err.println("[:(] La sala destino [actual:" + salaActual + " + dir:" + dir + "] vale null");
+		}
+		
+	}
+
+	public void finSimulacion(Personaje p) {
+		System.out.println("\n[WIN] ¡Ganador: " + p.getNombre() + "[" + p.getID() + "] !");
+		FINSIMULACION = true;
+		
 	}
 }

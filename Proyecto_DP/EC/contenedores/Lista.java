@@ -1,8 +1,10 @@
 package contenedores;
 
+import personaje.Personaje;
+
 /**
  * Clase que implementa una lista doblemente enlazada con los metodos mas comunes
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  *
  * @param <T>
@@ -309,7 +311,7 @@ public class Lista <T extends Comparable <T>>{
 			}
 		} else {
 			System.err.println("se esta intentando insertar en un elemento en la"
-					+ " pos " + donde + " cuando la lista es de tamaño " + tam + ".\n(0 <= @donde <= tam)");
+					+ " pos " + donde + " cuando la lista es de tamaï¿½o " + tam + ".\n(0 <= @donde <= tam)");
 		}
 	}
 	
@@ -325,11 +327,24 @@ public class Lista <T extends Comparable <T>>{
 	}
 	
 	/**
-	 * devuelve el tamaño de la lista (int)
+	 * devuelve el tamano de la lista (int)
 	 * @return
 	 */
 	public int obtenerTam(){
 		return tam;
+	}
+
+	
+	/**
+	 * Devuelve una copia de la lista para que existan dos iguales y no dos punteros a la misma)
+	 * @return Lista<T> opiada
+	 */
+	public Lista<T> copia() {
+		Lista<T> ret = new Lista<T>();
+		for (int i = 0; i < tam; i++) {
+			ret.insertarElemento(obtenerElemento(i),i);
+		}
+		return ret;
 	}
 
 }

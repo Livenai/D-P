@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import armas.Arma;
 import mapa.Mapa;
 import salas.ElHombrePuerta;
+import salas.Sala;
 
 /**
  * Clase que representa el tipo de personaje
@@ -51,7 +52,12 @@ public class Villano extends Personaje {
 					//si es mas poderosa, nos la quedamos para sembrar el CAOS!
 					//pero antes tiramos la basuri-arma que teniamos antes :3
 					uni.insertarArmaEnOrdenEn(arma, getDondeEstoy());
+					
+					System.out.println("[A] El villano " + this.getNombre() + "[" + this.getID() + "] ha cambiado su arma " +
+							arma.getNombre() + " " + arma.getPoder() + " por " + sacada.getNombre() + " " + sacada.getPoder() + ".");
+					
 					arma = sacada;
+
 				} else {
 					//si la sacada no es mas potente o es igual :(
 					//pues la dejamos donde estaba
@@ -59,6 +65,10 @@ public class Villano extends Personaje {
 				}
 			} else {// si no tenemos ningun arma
 				//pues la cogemos directamente
+				
+				System.out.println("[A] El villano " + this.getNombre() + "[" + this.getID() + "] ha obtenido el arma " +
+						sacada.toString());
+				
 				arma = sacada;
 				
 			}
@@ -88,10 +98,10 @@ public class Villano extends Personaje {
 			//anoten los cambios producidos en la batalla
 			hp.comprobarEstado();	
 			
-			System.out.println("Batalla: " + getNombre() + "["+ getID() +"] contra ElHombrePuerta." + "\nArmas en la batalla: " +
+			System.out.println("[B] Batalla: " + getNombre() + "["+ getID() +"] contra ElHombrePuerta." + "\n\tArmas en la batalla: " +
 					arma.getNombre() + "[" + arma.getPoder() + "]" + "  vs  " 
 					+ candidataDeEHP.getNombre() + "[" + candidataDeEHP.getPoder() + "]" 
-					+ "\nResultado del portal -> " + hp.isEstado());
+					+ "\n\tResultado del portal -> " + hp.isEstado());
 			System.out.println("set de armas de ElHombrePuerta despues de la batalla: ");
 			hp.mostrarSetDeArmasActual();System.out.println("\n");
 		}
@@ -102,7 +112,27 @@ public class Villano extends Personaje {
 
 	@Override
 	public void interactuarConOtrosPJ() {
-		// TODO interactuarPJ Villano
+		//Quitara su arma al primer SH que se encuentre en la sala sólo 
+		//si este personaje posee un arma igual a la que posee el SH y tiene mayor o igual poder.
+		Mapa uni = Mapa.obtenerUnico();
+		Sala salaActual = uni.getSalaConID(this.getDondeEstoy());
+		
+		//1º) bucamos al primer SH (si no hay ninguno no se hace nada)
+		SuperHeroe elPrimero = salaActual.sacarPrimerSH(false);
+		if(elPrimero != null){//si existe
+			//el SH savca su arma
+			Arma laDelSH = elPrimero.getArmaIgualA(this.arma);
+			//comprobamos
+			if(this.arma.getPoder()>=laDelSH.getPoder()){
+				//ganamos, asique el SH es derrotado
+				System.out.println("[X] el SuperHeroe " + elPrimero.toString() + " ha sido derrotado por " + this.toString());
+				//y pierde su arma, por lo que no se la devolvemos
+			} else {
+				//perdemos, asique todo queda como estaba
+				//el SH obtiene de nuevo su arma
+				elPrimero.insertarArma(laDelSH);
+			}
+		}//if
 	}
 
 
