@@ -30,6 +30,7 @@ public class Mapa {
 	
 	public static final int MAXTURNOS = 50; //turnos maximos de simulacion
 	public boolean FINSIMULACION = false; //dice si se ha terminado la simulación debidoa que alguien ha cruzado el portal
+	private Sala ganadores;//sala donde se almacenara a los personajes ganadores. (1111)
 	//---------
 
 	/**
@@ -52,6 +53,7 @@ public class Mapa {
 		SalaHombrePuerta = new TheDailyPlanet(35, 4);
 		mapita[alto-1][ancho-1] = SalaHombrePuerta;
 		turnoActual = 0;
+		ganadores = new Sala(1111);
 		System.out.println("[!] Mapa creado");
 	}
 	
@@ -74,6 +76,7 @@ public class Mapa {
 		SalaHombrePuerta = new TheDailyPlanet(TheDailyPlanet, cteApertura);
 		mapita[TheDailyPlanet/ancho][ TheDailyPlanet%ancho] = SalaHombrePuerta;
 		turnoActual = 0;
+		ganadores = new Sala(1111);
 		System.out.println("[!] Mapa creado con medidas ANCHO: " + ancho + " ;ALTO: " + alto + " (" + ancho*alto + " salas)");
 	}
 	
@@ -173,6 +176,49 @@ public class Mapa {
 	}//--------
 	
 	
+	/**
+	 * Metodo que registrael mapa en el log en su estado actual
+	 * @param mostrarPJ -> Si True muestra los pj en el mapa
+	 */
+	public void registrarMapa(boolean mostrarPJ) {
+		 for (int i = 0; i < ancho; i++) {
+		        log.log.write(" _");
+		    }
+		    log.log.write("\n");
+		    
+		    for(int j = 0; j < alto; j++) {//alto
+		        log.log.write("|");
+		        for(int i = 0; i < ancho; i++) {//ancho
+
+		            if(mostrarPJ && mapita[j][i].getPJDentro().obtenerTam() > 1) {
+		                log.log.write(""+mapita[j][i].getPJDentro().obtenerTam());
+		            } else if(mostrarPJ && mapita[j][i].getPJDentro().obtenerTam() == 1) {
+		                log.log.write(""+mapita[j][i].getPJDentro().obtenerElemento(0).getID());
+		            } else {
+		        	
+		                if(j == alto - 1) {
+		                    log.log.write("_");
+		                } else
+		                	if(mapita[j][i].isS()) {
+		                    log.log.write("_");
+		                } else {
+		                    log.log.write(" ");
+		                }
+		            }
+		            
+		            if(i == ancho - 1) {
+		                log.log.write("|");
+		            } else if(mapita[j][i].isE()) {
+		                log.log.write("|");
+		            } else {
+		                log.log.write(" ");
+		            }
+		        }
+		        
+		        log.log.write("\n");
+		    }
+	}
+	
 	
     /**
      * Muestra las salas que tienen armas y cuales son estas
@@ -270,7 +316,10 @@ public class Mapa {
 		 * 3- repetir hasta el numero maximo de turnos (cte MAXTURNOS)
 		 */
 		for (int T = 0; !FINSIMULACION && T < MAXTURNOS; T++,turnoActual++) {
-			//turnos
+
+			
+			
+			//procesado del turno:
 			System.out.println("____________________________________             \t_______________________________\n"
 					+ "____________________________________  Turno:\t" + T + "\t_______________________________\n"
 							+ "_______________________________________________________________________________________\n");
@@ -285,6 +334,21 @@ public class Mapa {
 
 			mostrarMapa();
 			System.out.println("_______________________________________________________________________________________");
+			
+			
+			//fase de registro:
+			log.log.write("(turn:" + turnoActual + ")\n");
+			log.log.write("(map:" + getSalaHombrePuerta().getID() + ")\n");
+			getEHP().registrarEstadoEHP();
+			registrarMapa(true);
+			registrarSalasConArmas();
+			registrarPJDeTodasLasSalas();
+			
+			//si hay alguien en la sala de ganadores se registra
+			if(ganadores.getPJDentro().obtenerTam() > 0){
+				log.log.write("(teseractomembers)\n");
+				ganadores.getPJDentro().obtenerPrimero().registrarPJ();
+			}
 		}
 		
 		
@@ -292,6 +356,31 @@ public class Mapa {
 		
 		
 
+	}
+
+
+	/**
+	 * Registra en el log todos los pj de las salas
+	 */
+	private void registrarPJDeTodasLasSalas() {
+		for (int i = 0; i < alto; i++) {
+			for (int j = 0; j < ancho; j++) {
+				getSalaConCoor(i, j).registrarPJDeLaSala();
+			}
+		}
+	}
+
+	/**
+	 * Metodo que registra en el log las salas que tengan armas y cuales son.
+	 */
+	private void registrarSalasConArmas() {		
+		for (int i = 0; i < alto; i++) {
+			for (int j = 0; j < ancho; j++) {
+				Sala candidata = getSalaConCoor(i, j);
+				if(candidata.esSalaConARmas())
+				candidata.registrarArmasDeLaSala();
+			}
+		}
 	}
 
 	/**
@@ -412,7 +501,7 @@ public class Mapa {
 	 *  destino en función de la dirección.
 	 * @param yo -> Personaje
 	 * @param salaActual -> ID de la sala origen
-	 * @param dir -> Char. Direccion de movimiento (N,S,E,O)
+	 * @param dir -> Char. Direccion de movimiento (N,S,E,W)
 	 */
 	public void moverPJconDir(Personaje yo, int salaActual, char dir) {
 		//primero sacamos al pj de si sala origen
@@ -431,7 +520,7 @@ public class Mapa {
 		case 'E':
 			destino = getSalaConID(origen.getID()+1);
 			break;
-		case 'O':
+		case 'W':
 			destino = getSalaConID(origen.getID()-1);
 			break;
 		}
@@ -447,6 +536,26 @@ public class Mapa {
 	public void finSimulacion(Personaje p) {
 		System.out.println("\n[WIN] ¡Ganador: " + p.getNombre() + "[" + p.getID() + "] !");
 		FINSIMULACION = true;
-		
+		//sacamos al pj de su sala y lo llevamos a la sala de ganadores
+		Sala origen = getSalaConID(p.getDondeEstoy());
+		origen.SacarPJ(p);
+		p.setDondeEstoy(1111);
+		ganadores.insertarPJ(p);		
 	}
+
+	/**
+	 * Metodo que registra en el log los caminos de los pj siguiendo
+	 *  lasiguiente estructura:  
+	 *  path:marca del personaje:secuencia de orientaciones
+	 */
+	public void registrarCaminosDePJ(){
+		for (int i = 0; i < alto; i++) {
+			for (int j = 0; j < ancho; j++) {
+				getSalaConCoor(i, j).registrarCaminosDePJ();
+			}
+		}
+	}
+	
+
+
 }

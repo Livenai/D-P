@@ -2,6 +2,8 @@ package contenedores;
 
 import java.util.LinkedList;
 
+import armas.Arma;
+
 /**
  * Implementacion de arbol binario de busqueda.
  * Algunos metodos han sido creados o editaodos 
@@ -160,105 +162,126 @@ public class Arbol <T extends Comparable <T>> {
 	    return encontrado;
 	}
 	
+	
+	
+	
+	
+	
+	
 	/**
-	 * Borrar un dato del Arbol.
-	 * accede directamente a un metodo recursivo que 
-	 * se encarga de borrar el dato (porcompleto, y no solo marcarlo como vacio)
-	 * 
-	 * @HISTORIA -> antes este metodo borraba los elementos a no ser 
-	 * que fueran justo el elemnto raiz (y no uno de los primeros hijos)
-	 * En este caso, solo marcaba el arbol como EsVacio pero no borraba el dato, y,
-	 * claro, este se seguia encontrando con el resto de metodos.
+	 * Borrar un dato del árbol.
 	 *
-	 * @param dato El dato que se quiere borrar.
-	*/
+	 * @param dato El dato que se quiere borrar
+	 */
 	public void borrar(T dato){
-		borrarOrden(dato); //TODO -> comprobarporque no borra el ultimo elemento dejando el arbol vacio
-//	    if(!vacio()) {
-//	        if(dato.compareTo(this.datoRaiz) < 0 && hIzq != null) {
-//	        	hIzq = hIzq.borrarOrden(dato);
-//			} else if(dato.compareTo(this.datoRaiz) > 0 && hDer != null) { 
-//	            hDer = hDer.borrarOrden(dato);
-//			} else {
-//				if(hIzq == null && hDer == null) {
-//					esVacio = true;
-//				} else {
-//					borrarOrden(dato);
-//	            }
-//			}
-//	    }
+	    if (!vacio()) {
+	        if (dato.compareTo(this.datoRaiz)<0){			//dato<datoRaiz
+					hIzq = hIzq.borrarOrden(dato);
+			}	
+	        else if (dato.compareTo(this.datoRaiz)>0) {		//dato>datoRaiz 
+	            		hDer = hDer.borrarOrden(dato);
+				}
+	            else //En este caso el dato es datoRaiz
+	            {
+	                if (hIzq==null && hDer==null){
+	                    esVacio=true;
+	                }
+	                else
+	                    borrarOrden(dato);
+	            }
+	    }
 	}
+	
 
 	/**
-	 * Borrar un dato. Este metodo es utilizado por el metodo borrar anterior.
+	 * Borrar un dato. Este método es utilizado por el método borrar anterior.
 	 *
-	 * @param dato El dato a borrar.
-	 * @return Devuelve el Arbol resultante despues de haber realizado el borrado.
-	*/
-	private Arbol<T> borrarOrden(T dato) {
+	 * @param dato El dato a borrar
+	 * @return Devuelve el árbol resultante después de haber realizado el borrado
+	 */
+	private Arbol<T> borrarOrden(T dato)
+	{
 	    T datoaux;
-	    Arbol<T> retorno = this;
+	    Arbol<T> retorno=this;
 	    Arbol<T> aborrar, candidato, antecesor;
 
-	    if(!vacio()) {
-	        if(dato.compareTo(this.datoRaiz) < 0 && hIzq != null) {
-	        	hIzq = hIzq.borrarOrden(dato);
-	        } else if(dato.compareTo(this.datoRaiz) > 0 && hDer != null) {
-	            hDer = hDer.borrarOrden(dato);
-	        } else if(dato.compareTo(this.datoRaiz) == 0){ //solo borra el dato si realmente es el que queremos borrar
-	        	aborrar = this;
-	                
-	            if((hDer == null) && (hIzq == null)) {
-	            	retorno = null;
-	            } else { 
-	            	if(hDer == null) {
-	            		// Solo hijo izquierdo.
-	            		aborrar = hIzq;
-	            		datoaux = this.datoRaiz;
-	            		datoRaiz = hIzq.getRaiz();
-	            		hIzq.datoRaiz = datoaux;
-	            		hIzq = hIzq.getHijoIzq();
-	            		hDer = aborrar.getHijoDer();
-	            		retorno = this;
-	            	} else if(hIzq == null) {
-	            		// Solo hijo derecho.	            	
-	            		aborrar = hDer;
-	            		datoaux = datoRaiz;
-	            		datoRaiz = hDer.getRaiz();
-	            		hDer.datoRaiz = datoaux;
-	                	hDer = hDer.getHijoDer();
-	                	hIzq = aborrar.getHijoIzq();
-	                	retorno = this;
-	            	} else {
-	            		// Tiene dos hijos.
-	            		candidato = this.getHijoIzq();
-	            		antecesor = this;
-	                
-	            		while(candidato.getHijoDer() != null) {
-	            			antecesor = candidato;
-	            			candidato = candidato.getHijoDer();
-	            		}
-
-	            		/* Intercambio de datos de candidato. */
-	            		datoaux = datoRaiz;
-	            		datoRaiz = candidato.getRaiz();
-	            		candidato.datoRaiz=datoaux;
-	            		aborrar = candidato;
-	            		if(antecesor == this) {
-	            			hIzq = candidato.getHijoIzq();
-	            		} else {
-	            			antecesor.hDer = candidato.getHijoIzq();
-	            		}
-	            	}
-	            	
-	            	aborrar.hIzq = null;
-	            	aborrar.hDer = null;
-	            }
+	    if (!vacio()) {
+	        if (dato.compareTo(this.datoRaiz)<0 && hIzq != null){		// dato<datoRaiz
+		    	        hIzq = hIzq.borrarOrden(dato);
 	        }
+			else
+	            if (dato.compareTo(this.datoRaiz)>0 && hDer != null) {	// dato>datoRaiz
+	    	           hDer = hDer.borrarOrden(dato);
+	            }
+				else {
+	                aborrar=this;
+	                if ((hDer==null)&&(hIzq==null)) { /*si es hoja*/
+	                	if(datoRaiz.equals(dato)){//si es este el nodo a borrar
+	                		retorno=null;
+	                	} else {//si el nodo a borrar parece que no existe
+	                		retorno = this;
+	                	}
+	                }
+	                else {
+	                    if (hDer==null) { /*Solo hijo izquierdo*/
+	                        aborrar=hIzq;
+	                        datoaux=this.datoRaiz;
+	                        datoRaiz=hIzq.getRaiz();
+	                        hIzq.datoRaiz = datoaux;
+	                        hIzq=hIzq.getHijoIzq();
+	                        hDer=aborrar.getHijoDer();
+
+	                        retorno=this;
+	                    }
+	                    else
+	                        if (hIzq==null) { /*Solo hijo derecho*/
+	                            aborrar=hDer;
+	                            datoaux=datoRaiz;
+	                            datoRaiz=hDer.getRaiz();
+	                            hDer.datoRaiz = datoaux;
+	                            hDer=hDer.getHijoDer();
+	                            hIzq=aborrar.getHijoIzq();
+
+	                            retorno=this;
+	                        }
+	                        else { /* Tiene dos hijos */
+	                        	if(this.datoRaiz.equals(new Arma("Anillo",11))){
+	                        		System.out.println("->");
+	                        	}
+	                        	
+	                        	
+	                            candidato = this.getHijoIzq();
+	                            antecesor = this;
+	                            while (candidato.getHijoDer()!=null) {
+	                                antecesor = candidato;
+	                                candidato = candidato.getHijoDer();
+	                            }
+
+	                            /*Intercambio de datos de candidato*/
+	                            datoaux = datoRaiz;
+	                            datoRaiz = candidato.getRaiz();
+	                            candidato.datoRaiz=datoaux;
+	                            aborrar = candidato;
+	                            if (antecesor==this){
+	                                hIzq=candidato.getHijoIzq();
+	                            }
+	                            else{
+	                                antecesor.hDer=candidato.getHijoIzq();
+	                            }
+	                        } //Eliminar solo ese nodo, no todo el subarbol
+	                    aborrar.hIzq=null;
+	                    aborrar.hDer=null;
+	                }
+	            }
 	    }
-	    
 	    return retorno;
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
@@ -381,9 +404,30 @@ public class Arbol <T extends Comparable <T>> {
 	 * busca el dato @dato y si lo encuentra lo devuelve y lo borra del arbol.
 	 *
 	 * @param dato El dato a buscar.
+	 * @param borrar True -> borra el dato al terminar,
+	 * @return el dato si existey borrar==true. NULL en otro caso
+	*/
+	public T obtenerBorrando(T dato, boolean borrar) {
+	    T encontrado = null;
+	    
+	    encontrado = obtenerBorrandoR(dato);
+	    
+	    if(encontrado != null && borrar){
+	    	this.borrar(encontrado);
+            borrar = false;
+	    	} //lo borra
+	    
+	    return encontrado;
+	}
+	
+	/**
+	 * busca el dato @dato y si lo encuentra lo devuelve y lo borra del arbol(recursivo).
+	 *
+	 * @param dato El dato a buscar.
+	 * @param borrar True -> borra el dato al terminar,
 	 * @return el dato si existe. NULL en otro caso
 	*/
-	public T obtenerBorrando(T dato) {
+	private T obtenerBorrandoR(T dato) {
 	    Arbol<T> aux = null;
 	    T encontrado = null;
 	    
@@ -392,18 +436,18 @@ public class Arbol <T extends Comparable <T>> {
 	            encontrado = datoRaiz;
 	        } else {
 	            if(dato.compareTo(this.datoRaiz) < 0) {
-	                aux=getHijoIzq();
+	                aux = getHijoIzq();
 	            } else {
 	                aux = getHijoDer();
 	            }
 	            
 	            if(aux != null) {
-	                encontrado = aux.obtenerBorrando(dato);
+	                encontrado = aux.obtenerBorrandoR(dato);
 	            }
 	        }
 	    }
 	    
-	    if(encontrado != null){this.borrar(encontrado);} //lo borra
+
 	    
 	    return encontrado;
 	}

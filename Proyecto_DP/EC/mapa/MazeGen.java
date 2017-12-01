@@ -89,8 +89,9 @@ public class MazeGen {
 		grafoRet.warshall();
 		Mapa.obtenerUnico().setGrafo(grafoRet);
 		
-		
+		//mostramos el mapasin atajos
 		Mapa.obtenerUnico().mostrarMapa();
+		Mapa.obtenerUnico().registrarMapa(false);
 		
 		//ahora hacemos los atajos
 

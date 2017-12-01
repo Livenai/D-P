@@ -10,7 +10,7 @@ import contenedores.Arbol;
 /**
  * aqui probamos que los metodos que he hecho 
  * por mi mismo en la clase arbol funcionen.
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  *
  */
@@ -39,21 +39,21 @@ public class P_Arbol {
 		Arma prueba = new Arma("A",3);
 	
 		
-		assertTrue(arbol.obtenerBorrando(prueba).equals(prueba)); //comprobamos si funciona al darle un elemento con solo el mismo nombre
+		assertTrue(arbol.obtenerBorrando(prueba,true).equals(prueba)); //comprobamos si funciona al darle un elemento con solo el mismo nombre
 
-		assertTrue(arbol.obtenerBorrando(prueba) == null); //comprobamos si se ha borrado el elemento
+		assertTrue(arbol.obtenerBorrando(prueba,true) == null); //comprobamos si se ha borrado el elemento
 		
 		prueba = new Arma("B",3);
 		
-		assertTrue(arbol.obtenerBorrando(prueba).equals(prueba)); //comprobamos si funciona al darle un elemento con solo el mismo nombre
+		assertTrue(arbol.obtenerBorrando(prueba,true).equals(prueba)); //comprobamos si funciona al darle un elemento con solo el mismo nombre
 
-		assertTrue(arbol.obtenerBorrando(prueba) == null); //comprobamos si se ha borrado el elemento
+		assertTrue(arbol.obtenerBorrando(prueba,true) == null); //comprobamos si se ha borrado el elemento
 		
 		prueba = new Arma("C",3);
 		
-		assertTrue(arbol.obtenerBorrando(prueba).equals(prueba)); //comprobamos si funciona al darle un elemento con solo el mismo nombre
+		assertTrue(arbol.obtenerBorrando(prueba,true).equals(prueba)); //comprobamos si funciona al darle un elemento con solo el mismo nombre
 
-		assertTrue(arbol.obtenerBorrando(prueba) == null); //comprobamos si se ha borrado el elemento
+		assertTrue(arbol.obtenerBorrando(prueba,true) == null); //comprobamos si se ha borrado el elemento
 
 		 
 	}
@@ -74,18 +74,24 @@ public class P_Arbol {
 		Arbol<Arma> arbol = new Arbol<Arma>();
 		
 		arbol.insertar(a);
-		arbol.insertar(b);
-		arbol.insertar(c);
-		arbol.insertar(d);
 		arbol.insertar(e);
-		arbol.insertar(f);
+		
+		arbol.insertar(c);
 		arbol.insertar(g);
+		arbol.insertar(d);
+		
+		arbol.insertar(f);
+		
+		arbol.insertar(b);
 		
 		arbol.inOrdenMostrar();System.out.println();
 		
 		
-		arbol.borrar(new Arma("A",1));
 		arbol.borrar(new Arma("C",1));
+		arbol.inOrdenMostrar();System.out.println();
+
+		
+		arbol.borrar(new Arma("A",1));
 		arbol.inOrdenMostrar();System.out.println();
 		
 		arbol.borrar(new Arma("B",1));
@@ -100,6 +106,11 @@ public class P_Arbol {
 		arbol.borrar(new Arma("D",1));
 		arbol.inOrdenMostrar();System.out.println();
 		
+		
+		System.out.println("---");
+		arbol.borrar(new Arma("G",7));
+		arbol.inOrdenMostrar();System.out.println();
+
 		
 		
 		

@@ -103,7 +103,7 @@ public class ElHombrePuerta {
 	 * @return el arma del arsenal del hombre puerta
 	 */
 	public Arma obtenerBorrando(Arma arma) {
-		return ArmasActuales.obtenerBorrando(arma);
+		return ArmasActuales.obtenerBorrando(arma,true);
 	}
 
 
@@ -150,6 +150,28 @@ public class ElHombrePuerta {
 
 		
 		return ret;
+	}
+
+
+
+	public void registrarEstadoEHP() {
+		log.log.write("(doorman:");
+		if(estado){
+			log.log.write("open");
+		} else {
+			log.log.write("closed");
+		}
+		
+		log.log.write(":" + constanteDeApertura + ":");
+		
+		LinkedList<Arma> armasAMostrar = ArmasActuales.inOrden();
+		
+		for (int i = 0; i < armasAMostrar.size(); i++) {
+			log.log.write(armasAMostrar.get(i).toString());
+		}
+		
+		log.log.write(")\n");
+		
 	}
 
 

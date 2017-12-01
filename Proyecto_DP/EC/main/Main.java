@@ -18,6 +18,7 @@ public class Main {
 
 	public static void main(String[] args) {//--------------------------------------------------------------------------------------		
 		//cargamos las cosas del fichero ~
+		log.log.recreate(); //esto reiniciael archivo para no escribir a continuacion de un log antiguo
 		Cargador cargador = new Cargador();
 		try { 
 			//Método que procesa línea a línea el fichero de entrada inicio.txt
@@ -38,6 +39,8 @@ public class Main {
 		//generamos nuestro laberinto
 		MazeGen generador = new MazeGen();
 		generador.generarMapaAleatorio();
+		
+		uni.registrarCaminosDePJ();
 		// insertamos las armas en el mapa
 		uni.insertarArmas();		
 		uni.mostrarMapa();

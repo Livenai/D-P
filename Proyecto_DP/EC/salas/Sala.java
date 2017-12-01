@@ -97,7 +97,7 @@ public class Sala {
 	 * @param pj
 	 */
 	public void insertarPJ(Personaje pj) {
-		if(pj == null){System.out.println("--------------> id " + ID);}
+		
 		PJDentro.insertarUltimo(pj);
 	}
 
@@ -283,6 +283,56 @@ public class Sala {
 			}
 		}		
 		return ret;
+	}
+
+	/**
+	 * Metodo que registra en el log los caminos de los pj siguiendo
+	 *  lasiguiente estructura:  
+	 *  path:marca del personaje:secuencia de orientaciones
+	 */
+	public void registrarCaminosDePJ() {
+		for (int i = 0; i < PJDentro.obtenerTam(); i++) {
+			PJDentro.obtenerElemento(i).registrarRuta();
+		}
+	}
+
+	
+	/**
+	 * Metodo que registra en el log la sala y las armas que contiene 
+	 * siguiendo el siguiente esquema:
+	 * (square:IDsala:armas)
+	 */
+	public void registrarArmasDeLaSala() {
+		log.log.write("(square:" + ID + ":");
+		
+		for (int i = 0; i < ArmasDentro.obtenerTam(); i++) {
+			log.log.write(ArmasDentro.obtenerElemento(i).toString());
+		}
+		
+		log.log.write(")\n");
+	}
+
+	
+	/**
+	 * Dice si la sala tiene armas dentro.
+	 * @return
+	 */
+	public boolean esSalaConARmas() {
+		if(ArmasDentro.estaVacia()){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * Metodo que registra en el log todos los pj de la sala
+	 */
+	public void registrarPJDeLaSala() {
+
+		for (int i = 0; i < PJDentro.obtenerTam(); i++) {
+			PJDentro.obtenerElemento(i).registrarPJ();
+		}
 	}
 	
 	

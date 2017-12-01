@@ -6,7 +6,7 @@ package armas;
  * 
  * Esta clase define que dos armas son iguales si se llaman 
  * igual, aunque tengan distinto poder.
- * @author CARLOS MUÑOZ ZAPATA
+ * @author CARLOS MUï¿½OZ ZAPATA
  * GIIIC
  *
  */
@@ -81,8 +81,7 @@ public class Arma implements Comparable<Arma>{
 	 * ordenadas por nombre (alfabetico)
 	 */
 	public int compareTo(Arma elOtro) {
-		Integer ret = this.Nombre.compareTo(elOtro.Nombre); 
-		return ret;
+	return this.Nombre.compareTo(elOtro.Nombre);
 	}
 	
 	

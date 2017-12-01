@@ -2,6 +2,7 @@ package personaje;
 
 import java.util.LinkedList;
 
+import armas.Arma;
 import mapa.Mapa;
 
 /**
@@ -22,6 +23,9 @@ public abstract class Personaje implements Comparable <Personaje>{
 	private int turnoDelPJ;
 	
 	
+	private int turnoEnElQueEmpieza;
+	
+	
 	/**
 	 * Ruta que el personaje seguira.
 	 * se define como la direccion a la que debe moverse en el turno indicado.
@@ -32,8 +36,6 @@ public abstract class Personaje implements Comparable <Personaje>{
 	 */
 	private LinkedList<Character> ruta;
 	
-	//TODO las rutas van en linked list. para las rutas ciclicas usar un paso e insertarlo al final :p
-	//TODO el moverse no mira si hay paredes, eso lo mira el calcular ruta. El mover se hace ciegamente (no hay porque usar el Dir.E de los profes)
 	
 	//----------
 	
@@ -48,6 +50,7 @@ public abstract class Personaje implements Comparable <Personaje>{
 		ID = ID_;
 		dondeEstoy = enQueSalaEmpieza;
 		turnoDelPJ = turnoEnElQueEmpiezan;
+		turnoEnElQueEmpieza = turnoEnElQueEmpiezan;
 		calcularRuta();
 		
 		System.out.println("[!] Personaje " + nombre + " [" + ID + "] creado.");
@@ -57,7 +60,6 @@ public abstract class Personaje implements Comparable <Personaje>{
 	//especiales
 	@Override
 	public int compareTo(Personaje o) {
-		//TODO: terminar compareTo ( aun no se necesita )
 		int ret = 0;
 		return ret;
 	}
@@ -129,11 +131,15 @@ public abstract class Personaje implements Comparable <Personaje>{
 		boolean movido = false;
 		if(!Mapa.obtenerUnico().FINSIMULACION &&
 				this.turnoDelPJ <= Mapa.obtenerUnico().getTurno()){
+			
 			interactuarPuerta();
-			movido = mover();
-			interactuarSala();
-			interactuarConOtrosPJ();
-			turnoDelPJ++;
+			if(!Mapa.obtenerUnico().FINSIMULACION){//control de turnos al ganar un pj
+				movido = mover();
+				interactuarSala();
+				interactuarConOtrosPJ();
+				turnoDelPJ++;
+			}
+			
 		}
 		return movido;
 	}
@@ -214,7 +220,85 @@ public abstract class Personaje implements Comparable <Personaje>{
 		ruta = ruta_;
 	}
 
+
+	/**
+	 *  Metodo que registra en el log el caminos del pj siguiendo
+	 *  la siguiente estructura:  
+	 *  path:marca del personaje:secuencia de orientaciones
+	 */
+	public void registrarRuta() {
+		log.log.write("(path:" + ID + ":");
+		for (int i = 0; i < ruta.size(); i++) {
+			log.log.write(" " + ruta.get(i));
+		}
+		log.log.write(")\n");
+	}
+
+	/**
+	 * Metodo que registra al pj en el log con la siguiente estructura
+	 * (tipo de personaje:marca:id sala actual:turno:armas:villanos capturados (sólo superhéores))
+	 */
+	public void registrarPJ(){
+		log.log.write("(");
+		//control de ganador
+		if(this.dondeEstoy == 1111){
+			log.log.write("owneroftheworld:");
+		}
+		
+		if(this instanceof SHFisico){
+			log.log.write("shphysical");
+		}else if(this instanceof SHVolador){
+			log.log.write("shflight");
+		}else if(this instanceof SHExtrasensorial){
+			log.log.write("shextrasensorial");
+		} else if(this instanceof Villano){
+			log.log.write("villain");
+		}
 	
+		//control de turnos
+		if(turnoDelPJ == turnoEnElQueEmpieza){
+			log.log.write(":" + ID + ":" + dondeEstoy + ":" + turnoEnElQueEmpieza + ":" + armasDelPJToString());
+		} else {
+			log.log.write(":" + ID + ":" + dondeEstoy + ":" + (turnoDelPJ-1) + ":" + armasDelPJToString());
+		}
+		
+		if(this instanceof SuperHeroe){
+			String v = ((SuperHeroe)this).VillanosCapturadosToString();
+			if(!v.isEmpty())
+			log.log.write(":" + v);
+		}
+		
+		log.log.write(")\n");
+	}
+
+
+	
+	/**
+	 * Metodo que devuelve el set de armas del pj como un String.
+	 * @patron
+	 * SuperHeroe -> (arma,pow)(arma,pow)...
+	 * Villano -> (arma,pow)
+	 * @return String
+	 */
+	private String armasDelPJToString() {
+		String ret = "";
+		
+		if(this instanceof Villano){
+			//controlamos que tenga arma
+			if(((Villano)this).tieneArma()){
+				ret = ((Villano)this).getArma().toString();
+			}
+		} else if (this instanceof SuperHeroe){
+			//controlamos que tenga armas
+			if(((SuperHeroe)this).tieneArma()){
+				LinkedList<Arma> aux = ((SuperHeroe)this).getArmasDelPJ().inOrden();
+				for (int i = 0; i < aux.size(); i++) {
+					ret = ret+aux.get(i).toString();
+				}	
+			}
+		}
+		return ret;
+	}
 	
 
 	

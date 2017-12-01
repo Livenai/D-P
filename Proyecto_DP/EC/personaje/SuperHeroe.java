@@ -18,6 +18,7 @@ import salas.Sala;
 public abstract class SuperHeroe extends Personaje {
 	
 	private Arbol<Arma> ArmasDelPJ;
+	private LinkedList<Villano> villanosCapturados;
 
 
 	
@@ -29,6 +30,7 @@ public abstract class SuperHeroe extends Personaje {
 	public SuperHeroe(String nombre,char id,int dondeEstoy,int turno) {
 		super(nombre,id, dondeEstoy, turno);		
 		ArmasDelPJ = new Arbol<Arma>();
+		villanosCapturados = new LinkedList<Villano>();
 		System.out.println("[!] SuperHeroe " + nombre + " [" + id + "] creado.");
 
 	}
@@ -57,7 +59,7 @@ public abstract class SuperHeroe extends Personaje {
 		if(sacada != null){
 			if(ArmasDelPJ.pertenece(sacada)){
 				//si ya tenemos un arma igual, �JUNTAMOS SU PODER! pero desenvainamos primero la nuestra ~
-				Arma laMia = ArmasDelPJ.obtenerBorrando(sacada);
+				Arma laMia = ArmasDelPJ.obtenerBorrando(sacada,true);
 				//juntamos su poder y nos la guardamos
 				ArmasDelPJ.insertar(new Arma(laMia.getNombre(),(laMia.getPoder()+sacada.getPoder()))); 
 				
@@ -158,6 +160,7 @@ public abstract class SuperHeroe extends Personaje {
 		}
 		
 		
+		
 		return ret;
 	}
 
@@ -186,8 +189,8 @@ public abstract class SuperHeroe extends Personaje {
 			if(laNuestra.getPoder()>laDelVillano.getPoder()){
 				//ganamos, asique el villano es derrotado
 				System.out.println("[X] el Villano " + elPrimero.toString() + " ha sido derrotado por " + this.toString());
-				//lo sacamos de la sala
-				salaActual.sacarPrimerVillano(true);
+				//lo sacamos de la sala y a nuestro saco de villanos capturados :3
+				villanosCapturados.add(salaActual.sacarPrimerVillano(true));
 			} else {
 				//perdemos, asique todo queda como estaba
 			}
@@ -206,7 +209,7 @@ public abstract class SuperHeroe extends Personaje {
 	 * @return arma si la tiene, null en otro caso
 	 */
 	public Arma getArmaIgualA(Arma cand) {
-		return ArmasDelPJ.obtenerBorrando(cand);
+		return ArmasDelPJ.obtenerBorrando(cand,true);
 	}
 
 	@Override
@@ -214,6 +217,35 @@ public abstract class SuperHeroe extends Personaje {
 
 	@Override
 	public abstract void calcularRuta();
+
+	
+	/**
+	 * Metodo que devuelve un String con los villanos capturados del SuperHeroe.
+	 * @patron -> (nombre,ID)
+	 * @return
+	 */
+	public String VillanosCapturadosToString() {
+		String ret = "";
+		
+		for (int i = 0; i < villanosCapturados.size(); i++) {
+			Villano aux = villanosCapturados.get(i);
+			ret = ret + ("(" + aux.getNombre() + "," +  aux.getID() + ")");
+		}
+		return ret;
+	}
+
+	/**
+	 * Metodo que dice si el SH tiene armas o no
+	 * @return True -> tiene al menos 1; False -> tiene 0
+	 */
+	public boolean tieneArma() {
+		int armas = ArmasDelPJ.hojas() + ArmasDelPJ.noHojas();
+		if(armas == 0){
+			return false;
+		}else {
+			return true;
+		}
+	}
 
 
 	

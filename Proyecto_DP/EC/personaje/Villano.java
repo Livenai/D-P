@@ -87,13 +87,14 @@ public class Villano extends Personaje {
 			Arma candidataDeEHP = hp.obtenerArmaMasPotente(true);
 			
 			//ahora... �SE ALZA LA BATALLA! �quien gana?
-			if(candidataDeEHP.getPoder() > arma.getPoder()){
-				//ElHombrePuerta gana asique recupera su arma y no la pierde.
-				hp.insertarArma(candidataDeEHP);
-			} else {
-				//gana el Villano asique ElHombrePuerta pierde su arma.
-			}
-			
+			//antes de nada...¿tenemos nosotros un arma?
+			if(arma != null){
+				if(candidataDeEHP.getPoder() > arma.getPoder()){
+					//ElHombrePuerta gana asique recupera su arma y no la pierde.
+					hp.insertarArma(candidataDeEHP);
+				} else {
+					//gana el Villano asique ElHombrePuerta pierde su arma.
+				}
 			//por ultimo, comprobamos el estado de ElHombrePuerta para que se
 			//anoten los cambios producidos en la batalla
 			hp.comprobarEstado();	
@@ -104,6 +105,15 @@ public class Villano extends Personaje {
 					+ "\n\tResultado del portal -> " + hp.isEstado());
 			System.out.println("set de armas de ElHombrePuerta despues de la batalla: ");
 			hp.mostrarSetDeArmasActual();System.out.println("\n");
+			}
+			
+			//y si se ha abierto el portal, nos colamos :P
+			if(hp.isEstado() == true){
+				//hemos ganado y se termina la simulacion ~
+				
+				System.out.println("[WIN] ¡¡¡El personaje " + this.getNombre() + "[" + this.getID() + "] ha cruzado el portal!!!");
+				Mapa.obtenerUnico().finSimulacion(this);
+			}
 		}
 		
 	}
@@ -151,12 +161,22 @@ public class Villano extends Personaje {
 		//de momento las rutas se pre-establecen
 		
 		LinkedList<Character> aux = new LinkedList<Character>();
-		char[] c = {'S','S','N','O','S','S','O','S','E','E','N','S','S'};
+		char[] c = {'S','S','N','W','S','S','W','S','E','E','N','S','S'};
 		
 		for (int i = 0; i < c.length; i++) {
 			aux.add(c[i]);
 		}
 		this.establecerRuta(aux);
+	}
+
+	
+	/**
+	 * Dice si el Villano posee un arma o no
+	 * @return True -> tiene arma; False -> notiene arma (null)
+	 */
+	public boolean tieneArma() {
+
+		return (arma != null);
 	}
 
 
