@@ -218,6 +218,11 @@ public class Arbol <T extends Comparable <T>> {
 	                if ((hDer==null)&&(hIzq==null)) { /*si es hoja*/
 	                	if(datoRaiz.equals(dato)){//si es este el nodo a borrar
 	                		retorno=null;
+	                		/*¿Hola? si borramos un elemento hoja de un arbol con mas elementos genial, ¿no? pero
+	                		 * ¿y siborramos el ULTIMO nodo del arbol. no le hacemos nada y este sigue existiendo 
+	                		 * porque ni siquiera lo marcamos como vacio ¬¬?*/
+	                		
+	                		
 	                	} else {//si el nodo a borrar parece que no existe
 	                		retorno = this;
 	                	}
@@ -405,29 +410,27 @@ public class Arbol <T extends Comparable <T>> {
 	 *
 	 * @param dato El dato a buscar.
 	 * @param borrar True -> borra el dato al terminar,
-	 * @return el dato si existey borrar==true. NULL en otro caso
+	 * @return el dato si existe y borrar==true. NULL en otro caso
 	*/
 	public T obtenerBorrando(T dato, boolean borrar) {
 	    T encontrado = null;
 	    
-	    encontrado = obtenerBorrandoR(dato);
+	    encontrado = obtenerEquivalente(dato);
 	    
 	    if(encontrado != null && borrar){
 	    	this.borrar(encontrado);
-            borrar = false;
 	    	} //lo borra
 	    
 	    return encontrado;
 	}
 	
 	/**
-	 * busca el dato @dato y si lo encuentra lo devuelve y lo borra del arbol(recursivo).
+	 * busca el dato @dato y si lo encuentra lo devuelve(recursivo).
 	 *
 	 * @param dato El dato a buscar.
-	 * @param borrar True -> borra el dato al terminar,
 	 * @return el dato si existe. NULL en otro caso
 	*/
-	private T obtenerBorrandoR(T dato) {
+	private T obtenerEquivalente(T dato) {
 	    Arbol<T> aux = null;
 	    T encontrado = null;
 	    
@@ -442,7 +445,7 @@ public class Arbol <T extends Comparable <T>> {
 	            }
 	            
 	            if(aux != null) {
-	                encontrado = aux.obtenerBorrandoR(dato);
+	                encontrado = aux.obtenerEquivalente(dato);
 	            }
 	        }
 	    }

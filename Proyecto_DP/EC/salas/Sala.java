@@ -222,7 +222,7 @@ public class Sala {
 				PJDentro.insertarElemento(ret, i);
 			}
 		}
-		if(borrar){
+		if(!borrar && encontrado){
 			PJDentro.insertarElemento(ret, i);
 		}
 		
@@ -247,7 +247,7 @@ public class Sala {
 				PJDentro.insertarElemento(ret, i);
 			}
 		}
-		if(borrar){
+		if(!borrar && encontrado){
 			PJDentro.insertarElemento(ret, i);
 		}
 		
@@ -279,6 +279,7 @@ public class Sala {
 			candidato = PJDentro.obtenerElemento(i);
 			if(candidato.equals(yo)){
 				ret = PJDentro.borrarElemento(i);
+
 				encontrado = true;
 			}
 		}		
@@ -331,7 +332,7 @@ public class Sala {
 	public void registrarPJDeLaSala() {
 
 		for (int i = 0; i < PJDentro.obtenerTam(); i++) {
-			PJDentro.obtenerElemento(i).registrarPJ();
+			PJDentro.obtenerElemento(i).registrarPJ(true);
 		}
 	}
 	

@@ -345,9 +345,16 @@ public class Mapa {
 			registrarPJDeTodasLasSalas();
 			
 			//si hay alguien en la sala de ganadores se registra
-			if(ganadores.getPJDentro().obtenerTam() > 0){
+			int numGanadores = ganadores.getPJDentro().obtenerTam();
+			if(numGanadores > 0){
 				log.log.write("(teseractomembers)\n");
-				ganadores.getPJDentro().obtenerPrimero().registrarPJ();
+				log.log.write("(owneroftheworld:");
+				ganadores.getPJDentro().obtenerPrimero().registrarPJ(false);
+				log.log.write(")\n");
+				//ahora registramos a los que estan dentro de la sala de ganadores pero llegaron despues
+				for (int i = 1; i < numGanadores; i++) {
+					ganadores.getPJDentro().obtenerElemento(i).registrarPJ(true);
+				}
 			}
 		}
 		
@@ -533,7 +540,12 @@ public class Mapa {
 		
 	}
 
-	public void finSimulacion(Personaje p) {
+	/**
+	 * Metodo que convierte a un pj en ganador. de esta manera, lo sacade 
+	 * su sala actual y lo introduce en la sala de ganadores (1111).
+	 * @param p -> el pj
+	 */
+	public void ganar(Personaje p) {
 		System.out.println("\n[WIN] ¡Ganador: " + p.getNombre() + "[" + p.getID() + "] !");
 		FINSIMULACION = true;
 		//sacamos al pj de su sala y lo llevamos a la sala de ganadores

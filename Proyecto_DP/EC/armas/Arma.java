@@ -81,7 +81,7 @@ public class Arma implements Comparable<Arma>{
 	 * ordenadas por nombre (alfabetico)
 	 */
 	public int compareTo(Arma elOtro) {
-	return this.Nombre.compareTo(elOtro.Nombre);
+		return this.Nombre.compareTo(elOtro.Nombre);
 	}
 	
 	

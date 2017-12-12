@@ -1,8 +1,6 @@
 package mapa;
 
-//TODO -> MazeGen terminar
-/*TODO -> el generar atajos es igual que el de el año pasado (orden por cada sala N,S,O,E)
-usar para los atajos el si(camino minimo entre dos salas == 3)then -> no tirar el muro que se genera elmapa*/
+
 import java.util.LinkedList;
 
 import org.hamcrest.core.Is;

@@ -68,7 +68,7 @@ public class ElHombrePuerta {
 			estado = true;
 			System.out.println("-> El Hombre Puerta ha abierto el portal <-");
 		} else {
-			estado = false;
+			//estado = false;
 		}
 	}
 

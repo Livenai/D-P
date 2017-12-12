@@ -18,6 +18,7 @@ public class P_Arbol {
 
 	@Test
 	public void testObtenerBorrando() {
+		System.out.println("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
 		Arma a = new Arma("A",1);
 		Arma b = new Arma("B",2);
 		Arma c = new Arma("C",3);
@@ -37,11 +38,16 @@ public class P_Arbol {
 		arbol.insertar(g);
 		
 		Arma prueba = new Arma("A",3);
+		
+		
+		arbol.inOrdenMostrar();System.out.println();
 	
 		
 		assertTrue(arbol.obtenerBorrando(prueba,true).equals(prueba)); //comprobamos si funciona al darle un elemento con solo el mismo nombre
 
 		assertTrue(arbol.obtenerBorrando(prueba,true) == null); //comprobamos si se ha borrado el elemento
+		
+		arbol.inOrdenMostrar();System.out.println();
 		
 		prueba = new Arma("B",3);
 		
@@ -49,13 +55,53 @@ public class P_Arbol {
 
 		assertTrue(arbol.obtenerBorrando(prueba,true) == null); //comprobamos si se ha borrado el elemento
 		
+		arbol.inOrdenMostrar();System.out.println();
+		
 		prueba = new Arma("C",3);
 		
 		assertTrue(arbol.obtenerBorrando(prueba,true).equals(prueba)); //comprobamos si funciona al darle un elemento con solo el mismo nombre
 
 		assertTrue(arbol.obtenerBorrando(prueba,true) == null); //comprobamos si se ha borrado el elemento
+		
+		//pruebas visuales del metodo:
+		arbol.inOrdenMostrar();System.out.println();
+		
+		arbol.obtenerBorrando(new Arma("G",0), false);
+		
+		arbol.inOrdenMostrar();System.out.println();
+		
+		arbol.obtenerBorrando(new Arma("G",0), true);
+		
+		
+		arbol.inOrdenMostrar();System.out.println();
+		
+		arbol.obtenerBorrando(new Arma("e",0), true);
+		
+		
+		arbol.inOrdenMostrar();System.out.println();
+		
+		arbol.obtenerBorrando(new Arma("E",0), true);
+		
+		
+		arbol.inOrdenMostrar();System.out.println();
+		
+		arbol.obtenerBorrando(new Arma("F",0), true);
+		
+		arbol.inOrdenMostrar();System.out.println();
+		
+		arbol.obtenerBorrando(new Arma("F",0), true);
+		arbol.inOrdenMostrar();System.out.println();
+		arbol.obtenerBorrando(new Arma("A",0), true);
+		arbol.inOrdenMostrar();System.out.println();
+		arbol.obtenerBorrando(new Arma("E",0), true);
+		arbol.inOrdenMostrar();System.out.println();
+		arbol.obtenerBorrando(new Arma("D",0), true);
+		System.out.println("-");
+		arbol.inOrdenMostrar();System.out.println();
+
 
 		 
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^");
 	}
 	
 	
@@ -116,6 +162,8 @@ public class P_Arbol {
 		
 		
 	}
+	
+	
 	
 
 }

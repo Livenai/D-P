@@ -129,16 +129,15 @@ public abstract class Personaje implements Comparable <Personaje>{
 		//se procesa el turno en el siguiente orden
 		//solo si te toca y si la simulación continua
 		boolean movido = false;
-		if(!Mapa.obtenerUnico().FINSIMULACION &&
-				this.turnoDelPJ <= Mapa.obtenerUnico().getTurno()){
+		if(this.turnoDelPJ <= Mapa.obtenerUnico().getTurno()){
 			
 			interactuarPuerta();
-			if(!Mapa.obtenerUnico().FINSIMULACION){//control de turnos al ganar un pj
-				movido = mover();
+			movido = mover();
+			if(dondeEstoy != 1111){//control de pj en sala del Teseracto
 				interactuarSala();
 				interactuarConOtrosPJ();
-				turnoDelPJ++;
 			}
+			turnoDelPJ++;
 			
 		}
 		return movido;
@@ -162,6 +161,15 @@ public abstract class Personaje implements Comparable <Personaje>{
 			
 			ruta.addLast(dir);
 			ret = true;
+		} else {
+			//y si se ha abierto el portal, nos colamos :P
+			if(Mapa.obtenerUnico().getEHP().isEstado() == true){
+				//hemos ganado y se termina la simulacion ~ (el turno terminará de procesarse)
+				
+				System.out.println("[WIN] ¡¡¡El personaje " + this.getNombre() + "[" + this.getID() + "] ha cruzado el portal!!!");
+				Mapa.obtenerUnico().ganar(this);
+				ret = true;
+			}	
 		}
 		
 		return ret;
@@ -238,12 +246,8 @@ public abstract class Personaje implements Comparable <Personaje>{
 	 * Metodo que registra al pj en el log con la siguiente estructura
 	 * (tipo de personaje:marca:id sala actual:turno:armas:villanos capturados (sólo superhéores))
 	 */
-	public void registrarPJ(){
-		log.log.write("(");
-		//control de ganador
-		if(this.dondeEstoy == 1111){
-			log.log.write("owneroftheworld:");
-		}
+	public void registrarPJ(boolean parentesis){
+		if(parentesis)log.log.write("(");
 		
 		if(this instanceof SHFisico){
 			log.log.write("shphysical");
@@ -268,7 +272,9 @@ public abstract class Personaje implements Comparable <Personaje>{
 			log.log.write(":" + v);
 		}
 		
-		log.log.write(")\n");
+		if(parentesis)
+			log.log.write(")\n");
+
 	}
 
 

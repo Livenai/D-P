@@ -31,7 +31,6 @@ public class Main {
 			System.err.println ("Excepción capturada al procesar fichero: "+valor.getMessage());
 		}
 		
-		//TODO IMPORTANTE -> hay que poner un atributo con la sala inicio, final y las 4 esquinas y usarlos con metodos para que al cambiar esta parte solo sea cambiarel emtodo
 		Mapa uni = Mapa.obtenerUnico();
 		
 		
@@ -52,5 +51,9 @@ public class Main {
 
 	}//fin del MAIN-----------------------------------------------------------------------------------------------------------------
 
+	
+	//TODO -> hay que arreglar el obtenerBorrando del arbol
+	//TODO -> hay que tener un eclipse que te genere los UML
+	//TODO -> hay que hacer lo de los caminos y los comparaores
 
 }

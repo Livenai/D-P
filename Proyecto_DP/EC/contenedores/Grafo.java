@@ -1,7 +1,7 @@
 package contenedores;
 
 import java.util.Set;
-//TODO -> al hacer lo de obtener todos los caminos, probar en un metodo de pruebas de junit antes de usarlo
+
 
 /**
  * @file grafo.h Declaracion de la clase grafo

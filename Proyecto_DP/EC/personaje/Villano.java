@@ -97,7 +97,7 @@ public class Villano extends Personaje {
 				}
 			//por ultimo, comprobamos el estado de ElHombrePuerta para que se
 			//anoten los cambios producidos en la batalla
-			hp.comprobarEstado();	
+			hp.comprobarEstado();
 			
 			System.out.println("[B] Batalla: " + getNombre() + "["+ getID() +"] contra ElHombrePuerta." + "\n\tArmas en la batalla: " +
 					arma.getNombre() + "[" + arma.getPoder() + "]" + "  vs  " 
@@ -105,14 +105,6 @@ public class Villano extends Personaje {
 					+ "\n\tResultado del portal -> " + hp.isEstado());
 			System.out.println("set de armas de ElHombrePuerta despues de la batalla: ");
 			hp.mostrarSetDeArmasActual();System.out.println("\n");
-			}
-			
-			//y si se ha abierto el portal, nos colamos :P
-			if(hp.isEstado() == true){
-				//hemos ganado y se termina la simulacion ~
-				
-				System.out.println("[WIN] ¡¡¡El personaje " + this.getNombre() + "[" + this.getID() + "] ha cruzado el portal!!!");
-				Mapa.obtenerUnico().finSimulacion(this);
 			}
 		}
 		
@@ -132,6 +124,8 @@ public class Villano extends Personaje {
 		if(elPrimero != null){//si existe
 			//el SH savca su arma
 			Arma laDelSH = elPrimero.getArmaIgualA(this.arma);
+
+			System.err.println(laDelSH.toString());
 			//comprobamos
 			if(this.arma.getPoder()>=laDelSH.getPoder()){
 				//ganamos, asique el SH es derrotado

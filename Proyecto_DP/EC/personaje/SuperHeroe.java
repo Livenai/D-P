@@ -118,17 +118,6 @@ public abstract class SuperHeroe extends Personaje {
 			//por ultimo, comprobamos el estado de ElHombrePuerta para que se
 			//anoten los cambios producidos en la batalla
 			hp.comprobarEstado();
-			
-			//y si se ha abierto el portal, nos colamos :P
-			if(hp.isEstado() == true){
-				//hemos ganado y se termina la simulacion ~
-				
-				System.out.println("[WIN] ¡¡¡El personaje " + this.getNombre() + "[" + this.getID() + "] ha cruzado el portal!!!");
-				Mapa.obtenerUnico().finSimulacion(this);
-			}
-			
-
-
 		}
 		
 	}

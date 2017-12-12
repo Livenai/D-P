@@ -189,9 +189,8 @@ public class Lista <T extends Comparable <T>>{
 				tam--;
 				return ret.getDato();
 			}
-			//caso intermedio O(n/2)
-			//si esta en la primera mitad
-			if(i <= (tam-1)/2){
+			//si esta en el medio
+			if(i <= (tam-1)){
 				NodoLista<T> ret = PPrimero;
 				for (int j = 0; j < i; j++) {
 					ret = ret.getSiguiente();
@@ -201,17 +200,7 @@ public class Lista <T extends Comparable <T>>{
 				tam--;
 				return ret.getDato();
 			}
-			//si esta en la segunda mitad
-			if(i > (tam-1)/2){
-				NodoLista<T> ret = PUltimo;
-				for (int j = tam-1; j < i; j--) {
-					ret = ret.getAnterior();
-				}
-				ret.getAnterior().setSiguiente(ret.getSiguiente());
-				ret.getSiguiente().setAnterior(ret.getAnterior());
-				tam--;
-				return ret.getDato();
-			}
+
 		}
 		return null;
 	}

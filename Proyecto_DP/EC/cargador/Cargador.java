@@ -84,7 +84,7 @@ public class Cargador {
 	        //procesar
 	        switch(numElto){
 	        case 0:	   
-	            crearMap(numCampos,vCampos); // TODO hay que crear estos metodos que sonlos que crean
+	            crearMap(numCampos,vCampos); 
 	            break;
 	        case 1:
 	            crearSHPhysical(numCampos,vCampos);
