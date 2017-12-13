@@ -1,6 +1,9 @@
 package contenedores;
 
+import java.util.LinkedList;
 import java.util.Set;
+
+import mapa.Mapa;
 
 
 /**
@@ -411,6 +414,78 @@ public class Grafo {
 		if(dis == 3){
 			ret = true;
 		}
+		return ret;
+	}
+
+	/**
+	 * Metodo que devuelve todos los caminos posibles desde el origen al destino 
+	 * en forma de LinkedList de caminos de ID (Integer)
+	 * @param origen donde empezamos
+	 * @param destino el nodo objetivo final del camino
+	 * @return LinkedList de LinkedList con Integer
+	 */
+	public LinkedList<LinkedList<Integer>> obtenerPosiblesCaminos(int origen, int destino) {
+		LinkedList<LinkedList<Integer>> ret = new LinkedList<LinkedList<Integer>>();
+		LinkedList<Integer> camino = new LinkedList<Integer>();
+		
+		ret = obtenerPosiblesCaminosR(origen,destino,camino,ret);
+		
+		return ret;
+	}
+	
+	
+	/**
+	 * Metodo auxiliar recursivo que realiza el proceso de obtencion de los posibles caminos(rellena ret)
+	 * @param actual donde estamos
+	 * @param destino el nodo objetivo final del camino
+	 * @return LinkedList de LinkedList con Integer
+	 */
+	private LinkedList<LinkedList<Integer>> obtenerPosiblesCaminosR(int actual, int destino, LinkedList<Integer> camino, LinkedList<LinkedList<Integer>> ret) {
+		Mapa uni = Mapa.obtenerUnico();
+		int opcionActual = 0;
+		char[] posiblesOpciones = {'N','S','E','W'};
+		
+		//mientras haya opciones
+		while(opcionActual < 4){
+			//System.err.println("actual: " + actual + "  Opcion: " + posiblesOpciones[opcionActual]);
+			//¿es posible la opcion?
+			if(!uni.getSalaConID(actual).hayMuroEn(posiblesOpciones[opcionActual])
+					&& !camino.contains(actual)){//si no hay muro Y si no hemos pasado ya por hai
+				//anotar opcion
+				camino.addLast(actual);
+				//¿es solucion final?
+				if(actual == destino){
+					//creaos una copia para no estropearlo despues
+					LinkedList<Integer> copia = new LinkedList<Integer>();
+					copia.addAll(camino);
+					ret.addLast(copia);
+					opcionActual = 5;
+												System.err.println("camino-> " + camino.toString());
+				}
+				//si no es solucion final, continuamos
+				else {
+					switch(posiblesOpciones[opcionActual]){
+					case 'N':
+						ret = obtenerPosiblesCaminosR(actual-uni.getAncho(), destino, camino, ret);
+						break;
+					case 'S':
+						ret = obtenerPosiblesCaminosR(actual+uni.getAncho(), destino, camino, ret);
+						break;
+					case 'E':
+						ret = obtenerPosiblesCaminosR(actual+1, destino, camino, ret);
+						break;
+					case 'W':
+						ret = obtenerPosiblesCaminosR(actual-1, destino, camino, ret);
+						break;
+					}
+				}
+				//una vez terminado, borramos la anotacion
+				camino.removeLast();
+			}
+			//cambiamos de opcion(si no quedan opciones hay que salir del while)
+			opcionActual++;
+		}
+		
 		return ret;
 	}
 

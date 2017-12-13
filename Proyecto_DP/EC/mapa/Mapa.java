@@ -1,6 +1,12 @@
 package mapa;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+
 import armas.Arma;
+import comparadores.OrdenarSalasPorFrecuencia;
 import contenedores.Grafo;
 import personaje.Personaje;
 import salas.ElHombrePuerta;
@@ -31,6 +37,8 @@ public class Mapa {
 	public static final int MAXTURNOS = 50; //turnos maximos de simulacion
 	public boolean FINSIMULACION = false; //dice si se ha terminado la simulación debidoa que alguien ha cruzado el portal
 	private Sala ganadores;//sala donde se almacenara a los personajes ganadores. (1111)
+	
+	private boolean frecuenciasHechas = false;//sirve para controllar que no se hallen las frecuencias de las salas mas de una vez
 	//---------
 
 	/**
@@ -260,9 +268,23 @@ public class Mapa {
 	 * Metodo que genera e inserta las llaves en las salas
 	 */
 	public void insertarArmas() {
-		// Al principio se generan estas armas y se insertan en las salas:
+		// Se insertan las armas en las salas mas cpncurrentes del mapa de 5 en 5
+		//criterio: Las salas mas frecuentes en todos los caminos desde el origen (0) al destino (TheDailyPlanet)
+		//			sin contar estas dos.
 		
-		int[] idSalasConArmas = {1, 2, 8, 14, 15, 21, 27, 35, 28, 29, 33, 34};
+		//antes de empezar tenemos que establecer los valores de la variable frecuencia de cada sala
+		//para ello llamamos al sguiente metodo:
+		
+		Mapa.obtenerUnico().establecerFrecuenciasDeSalas();
+		
+		//primero obtenemos las salas mas frecuentes
+		LinkedList<Sala> ordenadasPorFrecuencia = getSalasOrdenadasPor(new OrdenarSalasPorFrecuencia());
+		System.err.println("orden de salas: -----------------------------");
+		for (int i = 0; i < ordenadasPorFrecuencia.size(); i++) {
+			System.err.println("[" + ordenadasPorFrecuencia.get(i).getID() + "] frec: " + ordenadasPorFrecuencia.get(i).getFrecuencia() + "   armas: " + ordenadasPorFrecuencia.get(i).getArmasDentro().obtenerTam() );
+		}
+		System.err.println("orden de salas: -----------------------------");
+		
 		
         Arma [] armasSalas = {new Arma("Mjolnir",29), new Arma("Anillo",1), new Arma("Garra",27), 
                 new Arma("Armadura",3), new Arma("Red",25), new Arma("Escudo",5), 
@@ -287,16 +309,57 @@ public class Mapa {
                 new Arma("Gema",1), new Arma("Nullifier",3)};
 
 		
-		for (int i = 0; i < idSalasConArmas.length; i++) {
-			int idSala = idSalasConArmas[i];
-			int H = UNICO.ancho;
+		for (int i = 0; i < 12; i++) {//las 12 primeras
+			int candidata = ordenadasPorFrecuencia.removeFirst().getID();
 			for (int j=i*5 ; j < (i*5)+5; j++) {
-				UNICO.mapita[idSala/H][idSala%H].insertarArmaEnOrdenDePoder(armasSalas[j]);
+				UNICO.getSalaConID(candidata).insertarArmaEnOrdenDePoder(armasSalas[j]);
 			}
 		}
 	}//-----
 	
 	
+
+	/**
+	 * Metodo que devuelve una LinkedList de Salas con las salas ordenadas segun el Comparator dado
+	 * @param ordenarSalasPorFrecuencia -> Comparator de Salas
+	 * @return -> LinkedList de salas ordenadas
+	 */
+	public LinkedList<Sala> getSalasOrdenadasPor(Comparator<Sala> ordenarSalasPorFrecuencia) {
+		LinkedList<Sala> ret = new LinkedList<Sala>();
+		//primero obtenemos todas las salas en la lista
+		for (int i = 0; i < alto; i++) {
+			for (int j = 0; j < ancho; j++) {
+				ret.add(UNICO.getSalaConCoor(i, j));
+			}
+		}
+		//ahora ordenamos por el criterio del Comparator
+		Collections.sort(ret, new OrdenarSalasPorFrecuencia());
+
+		return ret;
+	}
+	
+	/**
+	 * Metodo que calcula todos los caminos desde la sala 0 a la TheDailyPlanet y 
+	 * establece lafrecuencia de aparicion de cada sala.
+	 * @Recall LLamar a este metodo mas de una vez no surtira ningun efecto.
+	 */
+	private void establecerFrecuenciasDeSalas() {
+		if(!frecuenciasHechas){
+			//primero obtenemos los distintos caminos desde el origen al destino
+			LinkedList<LinkedList<Integer>> caminos = grafo.obtenerPosiblesCaminos(0,SalaHombrePuerta.getID());
+			
+			//despues aumentamos la frecuencia de cada sala por su aparicion
+			
+			for (int i = 0; i < caminos.size(); i++) {
+				for (int j = 1; j < caminos.get(i).size()-1; j++) {//ojo -> no tenemos en cuenta el primer nodo(0) y el ultimo (destino, TheDailyPlanet)
+					getSalaConID(caminos.get(i).get(j)).aumentarFrecuencia(1);
+				}
+			}
+			//y nos aseguramos de que esto no se pueda repetir
+			frecuenciasHechas = true;
+		}
+	}
+
 	/**
 	 * Metodo que inicia la simulacion del programa.
 	 * 

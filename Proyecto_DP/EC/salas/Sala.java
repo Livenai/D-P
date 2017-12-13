@@ -28,6 +28,12 @@ public class Sala {
 
 	private int marca; //marcapara la creacion del laberinto
 	
+	/**
+	 * Marca la frecuencia de aparicion de la salaen los 
+	 * distintos caminos que van de la sala 0 a lasala TheDailyPlanet.
+	 */
+	private int frecuencia;
+	
 	//---------
 	
 	/**
@@ -43,6 +49,7 @@ public class Sala {
 		E = true;
 		O = true;
 		marca = ID_;
+		frecuencia = 0;
 		
 		System.out.println("[!] Sala " + ID + " creada.");
 	}
@@ -336,6 +343,37 @@ public class Sala {
 		}
 	}
 	
+	public int getFrecuencia(){
+		return frecuencia;
+	}
+	
+	/**
+	 * aumenta el valor de la frecuencia de la sala.
+	 * @param add -> frecuencia = frecuencia+add;
+	 */
+	public void aumentarFrecuencia(int add){
+		frecuencia = frecuencia+add;
+	}
+
+	/**
+	 * Dice si hay un muro en la direccion introducida.
+	 * Si se introduce una direccion erronea devuelve false (Oeste = W)
+	 * @return True si hay muro en esa dir, False en otro caso
+	 */
+	public boolean hayMuroEn(char dir) {
+		switch(dir){
+		case 'N':
+			return isN();
+		case 'S':
+			return isS();
+		case 'E':
+			return isE();
+		case 'W':
+			return isO();
+		default:
+			return false;
+		}
+	}
 	
 	
 }
