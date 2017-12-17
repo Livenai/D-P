@@ -39,6 +39,10 @@ public class Main {
 		MazeGen generador = new MazeGen();
 		generador.generarMapaAleatorio();
 		
+		//ahora las rutas
+
+		uni.calcularRutasDePJ();
+		
 		uni.registrarCaminosDePJ();
 		// insertamos las armas en el mapa
 		uni.insertarArmas();		

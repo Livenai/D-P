@@ -51,7 +51,8 @@ public abstract class Personaje implements Comparable <Personaje>{
 		dondeEstoy = enQueSalaEmpieza;
 		turnoDelPJ = turnoEnElQueEmpiezan;
 		turnoEnElQueEmpieza = turnoEnElQueEmpiezan;
-		calcularRuta();
+		//la ruta no se calcula aqui pues aun no habriasido creado el laberinto y todo el mapa serian paredes.
+		//se calcula despues del genMaze
 		
 		System.out.println("[!] Personaje " + nombre + " [" + ID + "] creado.");
 	}

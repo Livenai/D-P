@@ -152,15 +152,117 @@ public class Villano extends Personaje {
 
 	@Override
 	public void calcularRuta() {
-		//de momento las rutas se pre-establecen
+		//regla de la mano izquierda
+		LinkedList<Character> ruta = new LinkedList<Character>();
+		Mapa uni = Mapa.obtenerUnico();
 		
-		LinkedList<Character> aux = new LinkedList<Character>();
-		char[] c = {'S','S','N','W','S','S','W','S','E','E','N','S','S'};
+		//primero necesitamos saber que direccion es nuestra derecha, nuestro frente
+		char frente = 'S';
+		char izquierda = 'E';
+		int candidata = getDondeEstoy()+uni.getAncho();//a la que puede que nos movamos
+		int dondeEstoy = uni.getSalaConID(getDondeEstoy()).getID();//la sala actual
 		
-		for (int i = 0; i < c.length; i++) {
-			aux.add(c[i]);
+		//ahora iteramos hasta llegar a la sala TheDailyPlanet
+		while(!(dondeEstoy == uni.getSalaHombrePuerta().getID())){
+			//comprobamos nuestra izquierda. ¿hay muro?
+			if(uni.getSalaConID(dondeEstoy).hayMuroEn(izquierda)){
+				//hay muro, por lo que ahora comprobamos el frente
+				if(uni.getSalaConID(dondeEstoy).hayMuroEn(frente)){
+					//hay muro, por lo que nos toca "girar" a la derecha
+
+					switch(frente){
+					case 'N':
+						izquierda = frente;
+						frente = 'E';
+						candidata = dondeEstoy + 1;
+						break;
+					case 'S':
+						izquierda = frente;
+						frente = 'W';
+						candidata = dondeEstoy - 1;
+						break;
+					case 'E':
+						izquierda = frente;
+						frente = 'S';
+						candidata = dondeEstoy + uni.getAncho();
+						break;
+					case 'W':
+						izquierda = frente;
+						frente = 'N';
+						candidata = dondeEstoy - uni.getAncho();
+						break;
+					}
+					
+				} else {
+					//no hay muro, por lo que podemos avanzar
+					ruta.addLast(frente);
+					dondeEstoy = candidata;
+					switch(frente){
+					case 'N':
+						candidata = dondeEstoy - uni.getAncho();
+						break;
+					case 'S':
+						candidata = dondeEstoy + uni.getAncho();
+						break;
+					case 'E':
+						candidata = dondeEstoy + 1;
+						break;
+					case 'W':
+						candidata = dondeEstoy - 1;
+						break;
+					}
+				}
+			} else {
+				//no hay muro a nuestra izquierda, por lo que "giramos" a la izquierda...
+
+				switch(frente){
+				case 'N':
+					frente = izquierda;
+					izquierda = 'S';
+					candidata = dondeEstoy - 1;
+					break;
+				case 'S':
+					frente = izquierda;
+					izquierda = 'N';
+					candidata = dondeEstoy + 1;
+					break;
+				case 'E':
+					frente = izquierda;
+					izquierda = 'W';
+					candidata = dondeEstoy - uni.getAncho();
+					break;
+				case 'W':
+					frente = izquierda;
+					izquierda = 'E';
+					candidata = dondeEstoy + uni.getAncho();
+					break;
+				}
+				
+				//...y avanzamos
+				ruta.addLast(frente);
+				dondeEstoy = candidata;
+				switch(frente){
+				case 'N':
+					candidata = dondeEstoy - uni.getAncho();
+					break;
+				case 'S':
+					candidata = dondeEstoy + uni.getAncho();
+					break;
+				case 'E':
+					candidata = dondeEstoy + 1;
+					break;
+				case 'W':
+					candidata = dondeEstoy - 1;
+					break;
+				}
+			}	
 		}
-		this.establecerRuta(aux);
+		
+		
+		
+		
+		System.out.println("[V] Ruta de " + this.getID() + " : " + ruta.toString());
+		this.establecerRuta(ruta);
 	}
 
 	

@@ -1,6 +1,5 @@
 package mapa;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -351,13 +350,19 @@ public class Mapa {
 			//despues aumentamos la frecuencia de cada sala por su aparicion
 			
 			for (int i = 0; i < caminos.size(); i++) {
-				for (int j = 1; j < caminos.get(i).size()-1; j++) {//ojo -> no tenemos en cuenta el primer nodo(0) y el ultimo (destino, TheDailyPlanet)
+				for (int j = 0; j < caminos.get(i).size(); j++) {//ojo -> no tenemos en cuenta el primer nodo(0) y el ultimo (destino, TheDailyPlanet)
 					getSalaConID(caminos.get(i).get(j)).aumentarFrecuencia(1);
 				}
 			}
 			//y nos aseguramos de que esto no se pueda repetir
 			frecuenciasHechas = true;
 		}
+	}
+	
+	
+	public LinkedList<LinkedList<Integer>> getPosiblesCaminos(int origen, int destino){
+		LinkedList<LinkedList<Integer>> caminos = grafo.obtenerPosiblesCaminos(origen,destino);
+		return caminos;
 	}
 
 	/**
@@ -629,6 +634,22 @@ public class Mapa {
 				getSalaConCoor(i, j).registrarCaminosDePJ();
 			}
 		}
+	}
+	
+	
+	/**
+	 * Metodo que inicia el proceso de calculo de rutas de los personajes.
+	 */
+	public void calcularRutasDePJ(){
+		for (int i = 0; i < alto; i++) {
+			for (int j = 0; j < ancho; j++) {
+				getSalaConCoor(i, j).calcularRutasDeLosPJ();
+			}
+		}
+	}
+
+	public Grafo getGrafo() {
+		return grafo;
 	}
 	
 

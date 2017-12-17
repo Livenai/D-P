@@ -460,7 +460,7 @@ public class Grafo {
 					copia.addAll(camino);
 					ret.addLast(copia);
 					opcionActual = 5;
-												System.err.println("camino-> " + camino.toString());
+					//System.err.println("camino-> " + camino.toString());
 				}
 				//si no es solucion final, continuamos
 				else {

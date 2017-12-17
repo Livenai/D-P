@@ -1,63 +1,11 @@
- _ _ _ _ _ _
-|_ _  |_ _  |
-|_    |_    |
-|_ _|_  | |_|
-|  _     _| |
-|_ _|_|  _  |
-|_ _ _ _ _|_|
-(path:D: E E S S E S S E E S)
-(path:P: E E S W W E S W E N E S E S W W W S E W N E E S N E S S W W W E E E E E)
-(path:W: E E S S E S S E E S)
-(path:A: S S N W S S W S E E N S S)
-(path:V: S S N W S S W S E E N S S)
-(path:E: E E E N E E S)
-(turn:0)
-(map:35)
-(doorman:closed:2:(Acido,1)(Anillo,11)(Antorcha,5)(Armadura,13)(Baston,22)(Bola,3)(CadenaFuego,11)(CampoEnergia,5)(CampoMagnetico,5)(Capa,10)(Cetro,20)(Escudo,3)(Espada,11)(Flecha,12)(Garra,22)(Gema,4))
- _ _ _ _ _ _
-|3 _  |_ _ 2|
-|_    |_    |
-|_ _|_  | |_|
-|  _     _| |
-|_ _|_|  _  |
-|E _ _ _ _ _|
-(square:0:(Sable,16)(Acido,12)(Espada,10)(Nullifier,3)(Gema,1))
-(square:1:(Mjolnir,29)(Garra,27)(Red,25)(Armadura,3)(Anillo,1))
-(square:2:(Lucille,23)(GuanteInfinito,21)(LazoVerdad,9)(Lawgiver,7)(Escudo,5))
-(square:8:(CadenaFuego,19)(Flecha,17)(Antorcha,15)(Tridente,13)(Capa,11))
-(square:14:(Baston,28)(MazaOro,26)(Tentaculo,24)(CampoMagnetico,4)(Latigo,2))
-(square:15:(Cetro,22)(Laser,20)(Bola,10)(RayoEnergia,8)(CampoEnergia,6))
-(square:21:(Nullifier,23)(Espada,18)(Acido,16)(Gema,14)(Sable,12))
-(square:27:(Anillo,29)(Armadura,27)(Red,5)(Garra,3)(Mjolnir,1))
-(square:28:(Escudo,25)(Lawgiver,23)(LazoVerdad,21)(GuanteInfinito,9)(Lucille,7))
-(square:29:(Antorcha,28)(Capa,19)(Tridente,17)(Flecha,13)(CadenaFuego,11))
-(square:33:(Latigo,26)(CampoMagnetico,24)(Baston,15)(Tentaculo,4)(MazaOro,2))
-(square:34:(CampoEnergia,22)(RayoEnergia,20)(Bola,18)(Laser,8)(Cetro,6))
-(shphysical:D:0:1:)
-(shextrasensorial:P:0:1:)
-(shphysical:W:0:4:)
-(villain:A:5:1:)
-(villain:V:5:2:)
-(shflight:E:30:1:)
-(turn:1)
-(map:35)
-(doorman:closed:2:(Acido,1)(Anillo,11)(Antorcha,5)(Armadura,13)(Baston,22)(Bola,3)(CadenaFuego,11)(CampoEnergia,5)(CampoMagnetico,5)(Capa,10)(Cetro,20)(Escudo,3)(Espada,11)(Flecha,12)(Garra,22)(Gema,4))
- _ _ _ _ _ _
-|W 2  |_ _ V|
-|_    |_   A|
-|_ _|_  | |_|
-|  _     _| |
-|_ _|_|  _  |
-|_ E _ _ _ _|
-(square:0:(Sable,16)(Acido,12)(Espada,10)(Nullifier,3)(Gema,1))
-(square:1:(Red,25)(Armadura,3)(Anillo,1))
-(square:2:(Lucille,23)(GuanteInfinito,21)(LazoVerdad,9)(Lawgiver,7)(Escudo,5))
-(square:8:(CadenaFuego,19)(Flecha,17)(Antorcha,15)(Tridente,13)(Capa,11))
-(square:14:(Baston,28)(MazaOro,26)(Tentaculo,24)(CampoMagnetico,4)(Latigo,2))
-(square:15:(Cetro,22)(Laser,20)(Bola,10)(RayoEnergia,8)(CampoEnergia,6))
-(square:21:(Nullifier,23)(Espada,18)(Acido,16)(Gema,14)(Sable,12))
-(square:27:(Anillo,29)(Armadura,27)(Red,5)(Garra,3)(Mjolnir,1))
-(square:28:(Escudo,25)(Lawgiver,23)(LazoVerdad,21)(GuanteInfinito,9)(Lucille,7))
-(square:29:(Antorcha,28)(Capa,19)(Tridente,17)(Flecha,13)(CadenaFuego,11))
-(square:33:(Latigo,26)(CampoMagnetico,24)(Baston,15)(Tentaculo,4)(MazaOro,2))
-(square:34:(CampoEnergia,22)
+ _ _ _ _ _ _ _ _ _
+|_ _   _|_     _ _|
+| |_ _ _   _|_    |
+| | |  _|_| |_ _|_|
+| |  _|_  |_  | | |
+|   |  _|_  | |   |
+|_|_ _  |_ _   _| |
+| |_ _   _ _ _  |_|
+|  _   _|   | | | |
+|_ _|_ _ _|_ _|_ _|
+|_|_|_|_|_|_|_|_|_|

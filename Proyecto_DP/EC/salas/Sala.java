@@ -374,6 +374,16 @@ public class Sala {
 			return false;
 		}
 	}
+
+	/**
+	 * Metodo que inicia el proceso de calcular las rutas de todos los pj que haya en la sala
+	 */
+	public void calcularRutasDeLosPJ() {
+		for (int i = 0; i < PJDentro.obtenerTam(); i++) {
+			PJDentro.obtenerElemento(i).calcularRuta();
+		}
+		
+	}
 	
 	
 }
