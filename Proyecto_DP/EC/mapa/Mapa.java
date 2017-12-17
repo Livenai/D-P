@@ -464,7 +464,7 @@ public class Mapa {
 	 * @return -> Arma si hay al menos una; null en otro caso
 	 */
 	public Arma getMejorArmaDeSala(int sala) {
-		return UNICO.mapita[sala/UNICO.alto][sala%UNICO.ancho].obtenerMejorArmaDeLaSala();
+		return UNICO.mapita[sala/UNICO.ancho][sala%UNICO.ancho].obtenerMejorArmaDeLaSala();
 	}
 	
 	
@@ -476,7 +476,7 @@ public class Mapa {
 	 * @return
 	 */
 	public void insertarArmaEnOrdenEn(Arma a, int salaID) {
-		UNICO.mapita[salaID/UNICO.alto][salaID%UNICO.ancho].insertarArmaEnOrdenDePoder(a);
+		UNICO.mapita[salaID/UNICO.ancho][salaID%UNICO.ancho].insertarArmaEnOrdenDePoder(a);
 		
 	}
 
@@ -497,7 +497,7 @@ public class Mapa {
 	 * @return Sala
 	 */
 	public Sala getSalaConID(int ID){
-		return UNICO.mapita[ID/UNICO.alto][ID%UNICO.ancho];
+		return UNICO.mapita[ID/UNICO.ancho][ID%UNICO.ancho];
 	}
 	
 	

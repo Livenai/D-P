@@ -74,6 +74,7 @@ public class MazeGen {
 		
 		//creamos los nodos del grafo que representan nuestras salas
 		for (int i = 0; i < (Mapa.obtenerUnico().getAlto()*Mapa.obtenerUnico().getAncho()); i++) {
+			System.out.println("creando nodo " + i);
 			grafoRet.nuevoNodo(i);
 		}
 		
@@ -114,10 +115,9 @@ public class MazeGen {
 		int A = Mapa.obtenerUnico().getAlto();
 		int cincoPorciento = obtenerCincoPorciento(H,A);
 		
-		
 		//para el 5% de las salas:
 		for (int i = 0; i < cincoPorciento; i++) {
-			
+
 		
 			//primero elegimos una sala aleatoria
 			int IDsala = GenAleatorios.generarNumero(H*A);
@@ -150,6 +150,7 @@ public class MazeGen {
 				contraDireccion = 'O';
 			} else {
 				i--;//si no se tira ninguna pared esta ronda no se cuenta
+				System.out.println(":(");
 			}
 			
 			//tiramos la pared
@@ -187,7 +188,7 @@ public class MazeGen {
 	 *  1- cambiar los boolean de las salas.
 	 *  2- definir el camino en el grafo.
 	 *  
-	 *  Tiene en cuenta y propaga la marca si ignorarMarca == True.
+	 *  Tiene en cuenta y propaga la marca si ignorarMarca == False.
 	 * @param candidata 
 	 * @param ignorarMarca si== TRUE se ignora el proceso de comprobacion y expansion de marcas
 	 */
@@ -195,6 +196,7 @@ public class MazeGen {
 		Mapa uni = Mapa.obtenerUnico();
 		Sala A = uni.getSalaConID(candidata.salaA);
 		Sala B = uni.getSalaConID(candidata.salaB);
+		
 		
 		if(ignorarMarca || A.getMarca() != B.getMarca()){//si las marcas son distintas
 			//tiramos la pared
@@ -281,7 +283,7 @@ public class MazeGen {
 
 				idSala++;
 			}
-		}	
+		}
 	}
 
 }

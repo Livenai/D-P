@@ -110,9 +110,9 @@ public class Cargador {
 	 *  @param vCampos array que contiene los valores de cada atributo
 	 */
 	private void crearMap(int numCampos, List<String> vCampos){
-	    System.out.println("Creado Map: [" + vCampos.get(1) + "," + vCampos.get(2) + "] con cte [" + vCampos.get(4) + "]\n");
-	    Mapa.obtenerUnico(Integer.parseInt(vCampos.get(1)),
-	    				Integer.parseInt(vCampos.get(2)),
+	    System.out.println("Creado Map: [" + vCampos.get(2) + "," + vCampos.get(1) + "] con cte [" + vCampos.get(4) + "]\n");
+	    Mapa.obtenerUnico(Integer.parseInt(vCampos.get(2)),
+	    				Integer.parseInt(vCampos.get(1)),
 	    				Integer.parseInt(vCampos.get(3)),
 	    				Integer.parseInt(vCampos.get(4)));
 	}
